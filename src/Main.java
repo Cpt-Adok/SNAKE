@@ -15,7 +15,6 @@ import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.system.MemoryStack.*;
 import static org.lwjgl.system.MemoryUtil.*;
 
-
 public class Main {
     public static void main(String[] args) {
         if(!GLFW.glfwInit()) {
