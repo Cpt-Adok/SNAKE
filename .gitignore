@@ -3,3 +3,5 @@
 
 #le dossier binary pour séparer et pas importer les .class qui sont inutile a Github.
 bin/
+
+*.class
