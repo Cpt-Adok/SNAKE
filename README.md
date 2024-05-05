@@ -18,6 +18,15 @@ C'est un projet de fin de Licence L1 en Informatique à UPEC, la création d'un 
 
 - La partie **GRAPHIQUE**
 
+- La partie **PROBLÈME ET SOLUTION RENCONTRÉES**
+
 # CRÉDITS
+
+Ce projet a pu être aussi enrichissant grâce à :
+
+- [LWJGL](https://www.lwjgl.org)
+- [JOML](http://joml.org/)
+
+
 
 Ce projet à été réalisé par FARIA Théo et GUEZO Loïc.
