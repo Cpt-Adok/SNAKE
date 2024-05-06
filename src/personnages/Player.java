@@ -1,7 +1,11 @@
-package personnages;
+package Personnages;
 
 public class Player extends Characters {
-    public Player(int[] size) {
-        super(size);
+    public Player() {
+        
+    }
+
+    public Integer[] changeCoordinate() {
+        return null;
     }
 }

@@ -1,10 +1,18 @@
-package personnages;
+package Personnages;
 
 public class Characters {
     protected int[] coordinate;
-    private int[] size; // N
+    public static int size; // N
+    
+    public static void setSize(int s) {
+        size = s;
+    }
 
-    protected Characters(int[] size) {
-        this.size = size;
+    public int[] getCoordinate() {
+        return this.coordinate;
+    }
+
+    public int getSize() {
+        return size;
     }
 }
