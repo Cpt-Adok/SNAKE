@@ -1,5 +1,5 @@
 package Personnages;
 
-public class Robot extends Characters {
+public class Robot extends Personnage {
     
 }
