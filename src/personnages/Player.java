@@ -1,4 +1,4 @@
-package Personnages;
+package personnages;
 
 public class Player extends Personnage {
     public Player(int size, int[] coordinate) {
