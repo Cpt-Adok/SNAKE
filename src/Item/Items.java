@@ -5,8 +5,9 @@ package Item;
  */
 public enum Items {
     Mur("mur", Effects.IMPASSABLE),
+    Body("corps", Effects.IMPASSABLE),
 
-    FRAISE("fraise", Effects.INVINCIBILITY),
+    ABRICOT("fraise", Effects.INVINCIBILITY),
     ORANGE("orange", Effects.POWER),
     BANANE("banane", Effects.BOOST);
 
@@ -19,7 +20,7 @@ public enum Items {
     }
 
     /**
-     * * <p> type de variable pour recuperer le nom :
+     * <p> type de variable pour recuperer le nom :
      * <pre><code>String name = Item.FRAISE.getName()</code></pre>
      * @return Avoir le nom de l'item 
      */
