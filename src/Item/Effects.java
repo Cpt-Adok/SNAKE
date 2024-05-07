@@ -25,5 +25,5 @@ public enum Effects {
     /**
      * <p> impossible à passer à travers.
      */
-    IMPASSABLE,
+    IMPASSABLE;
 }
