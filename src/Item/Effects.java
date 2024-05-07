@@ -26,9 +26,4 @@ public enum Effects {
      * <p> impossible à passer à travers.
      */
     IMPASSABLE,
-
-    /**
-     * <p> le corps du serpent "disparait d'une case".
-     */
-    DISPARITON;
 }
