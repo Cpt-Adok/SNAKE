@@ -1,4 +1,4 @@
-package Item;
+package item;
 
 /**
  * <p>Ceci est l'enumération où il y aura tout les effets disponible dans le projet.

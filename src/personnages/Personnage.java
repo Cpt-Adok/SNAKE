@@ -1,8 +1,8 @@
-package Personnages;
+package personnages;
 
 import java.util.ArrayList;
 
-import Item.Effects;
+import item.Effects;
 
 public class Personnage {
     private int size;

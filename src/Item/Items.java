@@ -1,4 +1,4 @@
-package Item;
+package item;
 
 /**
  * Cette enumération contient tout les items à effets disponnible dans le jeu.
