@@ -3,6 +3,7 @@ package Environnements;
 import java.lang.Object;
 import java.util.Random;
 
+import Item.Effects;
 import Item.Items;
 
 public class Map {
@@ -27,15 +28,20 @@ public class Map {
             if (coordinate instanceof Items) {
                 return ((Items) coordinate).getName();
             }
+            return "null";
         }
-        return "Empty";
+        return "void";
+    }
+
+    public Items getItems(int[] coordinate) {
+        return (Items)getGrid()[coordinate[1]][coordinate[0]];
     }
 
     public String getStringGrid() {
         StringBuffer stringGrid = new StringBuffer();
         
-        for(Object[] i : this.grid) {
-            for(Object value : i) {
+        for(Object[] listValue : this.grid) {
+            for(Object value : listValue) {
                 stringGrid.append(value);
             }
             stringGrid.append("\n");
