@@ -5,7 +5,9 @@ package Item;
  */
 public enum Items {
     Mur("mur", Effects.IMPASSABLE),
+
     Body("corps", Effects.IMPASSABLE),
+    Head("tete", Effects.IMPASSABLE),
 
     ABRICOT("fraise", Effects.INVINCIBILITY),
     ORANGE("orange", Effects.POWER),
