@@ -5,26 +5,13 @@ public class Player extends Personnage {
         super(size, coordinate);
     }
 
-    public void moveCoordinate(int keys) {
+    public void changeCoordinate(int keys) {
         switch (keys) {
-            case 77:    // w
-                this.coordinate[1]++;
-                break;
-
-            case 73:    // s
-                this.coordinate[1]--;
-                break;
-            
-            case 61:    // a
-                this.coordinate[0]--;
-                break;
-
-            case 64:    // d
-                this.coordinate[0]++;
-                break;
-            
-            default:    // autre
-                break; 
+            case 77:    Mouvement.HAUT.editCoordinate(coordinate); // w
+            case 73:    Mouvement.BAS.editCoordinate(coordinate); // s
+            case 61:    Mouvement.GAUCHE.editCoordinate(coordinate); // a
+            case 64:    Mouvement.DROITE.editCoordinate(coordinate); // d
+            default:    break;
         }
     }
 }

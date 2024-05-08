@@ -48,7 +48,7 @@ public class Murs{
         if (b){
             for (int i=this.debut_horizontal;i<this.debut_horizontal+this.longueur;i++){
                 for (int j=this.debut_vertical;j<this.debut_vertical+this.largeur;j++){
-                    m.grille[i][j]=Items.MUR;
+                    m.getGrid()[i][j]=Items.MUR;
                 }
             }
         }

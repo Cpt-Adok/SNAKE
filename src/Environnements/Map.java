@@ -1,69 +1,80 @@
 package Environnements;
 
+import java.lang.Object;
 import java.util.Random;
 
-public class Map{
-    int longueur;
-    int largeur;
-    int nbMurs;
-    int frequencesFruits;
-    Object [][] grille;
+import Item.Items;
 
-    public Map(int longueur,int largeur, int nbMurs,int frequencesFruits){
-        this.largeur=largeur;
-        this.longueur=longueur;
-        this.nbMurs=nbMurs;
-        this.frequencesFruits=frequencesFruits;
+public class Map {
+    private Object[][] grid;
+    private Random random;
+    
+    public int longueur;
+    public int largeur;
+    
+    public Map(long longueur, long largeur) {
+        this.longueur = (int)longueur;
+        this.largeur = (int)largeur;
 
-        grille=new Object[longueur][largeur];
+        this.random = new Random();
 
-        for (int i=0;i<nbMurs;i++){
-            this.placeMur();
-        }
-
-        for (int j=0;j<this.largeur*this.longueur;j+=this.frequencesFruits){
-            this.placeFruit();
-        }
+        this.grid = new Object[this.largeur][this.longueur];
     }
 
-    public int getLongueur(){  //Accéder à la variable Longueur
-        System.out.println("Longueur : "+ this.longueur);
-        return this.longueur;
-    }
-
-    public int getLargeur(){  //Accéder à la variable Largeur
-        System.out.println("Largeur : "+ this.largeur);
-        return this.largeur;
-    }
-
-    public void printGrille(){  //Affichage simple de la grille de jeu
-        for (int i=0;i<longueur;i++){
-            for (int j=0;j<largeur;j++){
-                System.out.print(this.grille[i][j]);
+    public String getCoordinate(int x, int y) {
+        if (x >= 0 && x < grid[0].length && y >= 0 && y < grid.length) {
+            Object coordinate = grid[y][x];
+            if (coordinate instanceof Items) {
+                return ((Items) coordinate).getName();
             }
-            System.out.println();
+        }
+        return "Empty";
+    }
+
+    public String getStringGrid() {
+        StringBuffer stringGrid = new StringBuffer();
+        
+        for(Object[] i : this.grid) {
+            for(Object value : i) {
+                stringGrid.append(value);
+            }
+            stringGrid.append("\n");
+        }
+
+        return stringGrid.toString();
+    }
+
+    public void addItems(Items[] items, int number) {
+        for(int i = 0; i<(items.length-1); i++) {
+            int value = this.random.nextInt(number); 
+            number -= value;
+            randomize(items[i], value);
+        }
+        randomize(items[items.length-1], number);
+    }
+
+    public Object[][] getGrid() {
+        return grid;
+    }
+
+    public void ajoutBordure() {
+        for(int i = 0; i < this.grid.length; i++) {
+            for(int k = 0; k < this.grid[0].length; k++) {
+                if (i == 0 || i == this.grid.length - 1 || k == 0 || k == this.grid[0].length - 1) {
+                    this.grid[i][k] = Items.MUR;
+                }
+            }
         }
     }
 
-    // Réfléchir pour mettre plusieurs murs à des endroits différents
-    public void placeMur(){       //Positionner un mur défini aléatoirement sur la Map
-        Random r=new Random();
-        int x=r.nextInt(this.longueur-1);   // Le "-1" permet d'éviter les murs faisant déjà partie de
-        int y=r.nextInt(this.largeur-1);    // la bordure de la Map
-        int L=r.nextInt(this.longueur-x);
-        int l=r.nextInt(this.largeur-y);
+    private void randomize(Items item, int number) {
+        for(int i = 0; i<number; i++) {
+            int x = this.random.nextInt(1, this.grid[0].length);
+            int y = this.random.nextInt(1, this.grid.length);
 
-        Murs mur =new Murs(x, y,L, l);
-        mur.insereMur(this);
-    }
-
-    public void placeFruit(){
-        Random r=new Random();
-        Fruits fruit=new Fruits();
-
-        int x=r.nextInt(this.longueur);
-        int y=r.nextInt(this.largeur);
-
-        this.grille[x][y]=fruit;
+            if(!(getGrid()[y][x] instanceof Items)) this.grid[y][x] = item;
+            else i--;
+            
+        }
     }
 }
