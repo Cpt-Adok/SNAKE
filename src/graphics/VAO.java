@@ -1,7 +1,8 @@
 package graphics;
 
-import static org.lwjgl.opengl.GL11.*;
+import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL30;
+
 
 public class VAO {
     private int id;
@@ -11,7 +12,7 @@ public class VAO {
         bind();
     }
 
-    public void cleanup() {
+    public void clean() {
         unbind();
         GL30.glDeleteVertexArrays(id);
     }
@@ -26,19 +27,26 @@ public class VAO {
 
     public void setAttributePointer(int index, int size, int type, int stride, long offset) {
         GL30.glVertexAttribPointer(index, size, type, false, stride, offset);
+        enableVertexAttribArray(index);
+    }
+
+    public void enableVertexAttribArray(int index) {
         GL30.glEnableVertexAttribArray(index);
     }
 
-    public void drawElement(int mode, int count, int type, long indices) {
-        bind();
+    public void disableVertexAttribArray(int index) {
+        GL30.glDisableVertexAttribArray(index);
+    }
 
-        glDrawElements(mode, count, type, indices);
+    public void drawElements(int mode, int count, int type, long indices) {
+        bind();
+        GL11.glDrawElements(mode, count, type, indices);
         unbind();
     }
 
-    public void drawElementIndices(int mode, int first, int count) {
+    public void drawElements(int mode, int first, int count) {
         bind();
-        glDrawArrays(mode, first, count);
+        GL11.glDrawArrays(mode, first, count);
         unbind();
     }
 }

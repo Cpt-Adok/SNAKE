@@ -7,13 +7,11 @@ public class VBO {
 
     public VBO(float[] vertices) {
         this.id = GL15.glGenBuffers();
-        GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, this.id);
-        GL15.glBufferData(GL15.GL_ARRAY_BUFFER, vertices, GL15.GL_STATIC_DRAW);
-
         bind();
+        GL15.glBufferData(GL15.GL_ARRAY_BUFFER, vertices, GL15.GL_STATIC_DRAW);
     }
 
-    public void cleanup() {
+    public void clean() {
         unbind();
         GL15.glDeleteBuffers(this.id);
     }

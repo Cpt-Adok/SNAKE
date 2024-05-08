@@ -1,6 +1,5 @@
 # Paramètres
 .PHONY: all clean run BIN_DIR
-.SILENT: clean run 
 
 # variables
 JAVAC = javac
@@ -15,8 +14,6 @@ JAR = $(LIB_DIR)/*:$(LIB_DIR)/lwjgl/*
 
 JAR_JAVAC = $(JAR):$(SRC_DIR)
 JAR_JAVA = $(JAR):$(BIN_DIR)
-
-UNAME := $(shell uname)
 
 # main
 all: $(MAIN_FILE) run
