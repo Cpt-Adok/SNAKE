@@ -4,12 +4,12 @@ package Item;
  * Cette enumération contient tout les items à effets disponnible dans le jeu.
  */
 public enum Items {
-    Mur("mur", Effects.IMPASSABLE),
+    MUR("mur", Effects.IMPASSABLE),
 
-    Body("corps", Effects.IMPASSABLE),
-    Head("tete", Effects.IMPASSABLE),
+    BODY("corps", Effects.IMPASSABLE),
+    HEAD("tete", Effects.IMPASSABLE),
 
-    ABRICOT("fraise", Effects.INVINCIBILITY),
+    FRAISE("fraise", Effects.INVINCIBILITY),
     ORANGE("orange", Effects.POWER),
     BANANE("banane", Effects.BOOST);
 

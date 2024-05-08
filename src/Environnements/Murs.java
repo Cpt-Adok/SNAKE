@@ -15,7 +15,11 @@ public class Murs{
         this.largeur=largeur;
     }
 
-    public int getDebutHorizontal(){   //Accéder à la variable de position horizontale
+    /**
+     * <p>Accéder à la variable de position horizontale
+     * @return {@code debut_horizontal}
+     */
+    public int getDebutHorizontal(){  
         return this.debut_horizontal;
     }
 
@@ -44,7 +48,7 @@ public class Murs{
         if (b){
             for (int i=this.debut_horizontal;i<this.debut_horizontal+this.longueur;i++){
                 for (int j=this.debut_vertical;j<this.debut_vertical+this.largeur;j++){
-                    m.grille[i][j]=Items.Mur;
+                    m.grille[i][j]=Items.MUR;
                 }
             }
         }
