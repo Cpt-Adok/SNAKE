@@ -20,21 +20,27 @@ public class Map {
         this.random = new Random();
 
         this.grid = new Object[this.largeur][this.longueur];
+        this.fillGrid();
     }
 
-    public String getCoordinate(int x, int y) {
+    public Items getCoordinate(int x, int y) {
         if (x >= 0 && x < grid[0].length && y >= 0 && y < grid.length) {
             Object coordinate = grid[y][x];
             if (coordinate instanceof Items) {
-                return ((Items) coordinate).getName();
-            }
-            return "null";
+                return ((Items)coordinate);
+            } 
         }
-        return "void";
+        return null;
     }
 
     public Items getItems(int[] coordinate) {
         return (Items)getGrid()[coordinate[1]][coordinate[0]];
+    }
+
+    public boolean isGameOver(int[] coordinate) {
+        if (getCoordinate(longueur, largeur) != null && 
+            getCoordinate(longueur, largeur).getEffects() == Effects.IMPASSABLE) return true;
+        return false;
     }
 
     public String getStringGrid() {
@@ -51,12 +57,13 @@ public class Map {
     }
 
     public void addItems(Items[] items, int number) {
-        for(int i = 0; i<(items.length-1); i++) {
+        int lengthItems = (items.length-1);
+        for(int i = 0; i<lengthItems; i++) {
             int value = this.random.nextInt(number); 
             number -= value;
             randomize(items[i], value);
         }
-        randomize(items[items.length-1], number);
+        randomize(items[lengthItems], number);
     }
 
     public Object[][] getGrid() {
@@ -69,6 +76,14 @@ public class Map {
                 if (i == 0 || i == this.grid.length - 1 || k == 0 || k == this.grid[0].length - 1) {
                     this.grid[i][k] = Items.MUR;
                 }
+            }
+        }
+    }
+
+    private void fillGrid() {
+        for(int i = 0; i < this.grid.length; i++) {
+            for(int k = 0; k < this.grid[0].length; k++) {
+                this.grid[i][k] = Items.VOID;
             }
         }
     }

@@ -8,6 +8,7 @@ public enum Items {
 
     BODY("corps", Effects.IMPASSABLE),
     HEAD("tete", Effects.IMPASSABLE),
+    VOID("void", null),
 
     FRAISE("fraise", Effects.INVINCIBILITY),
     ORANGE("orange", Effects.POWER),

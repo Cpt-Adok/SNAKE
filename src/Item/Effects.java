@@ -12,8 +12,9 @@ public enum Effects {
 
     /**
      * <p> Modifie la valeur de N pendant 2 tours en le multipliant par 2
-     * <p> <strong>Exemple : </strong> si N = 2, il va être *2 donc N sera 
-     * egal à 4 et le prochain tour quand N = 3, il sera égal à 6.   
+     * <p> <strong>Exemple : </strong> si N = 2, il va être /2 donc N sera 
+     * egal à 1 et le prochain tour quand N = 3, il sera égal à 1 (division 
+     * d'entier).   
      */
     BOOST, 
 
@@ -25,5 +26,5 @@ public enum Effects {
     /**
      * <p> impossible à passer à travers.
      */
-    IMPASSABLE;
+    IMPASSABLE, Effects;
 }

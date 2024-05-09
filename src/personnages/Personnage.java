@@ -29,11 +29,6 @@ public class Personnage {
     protected ArrayList<int[]> coordinate;
 
     /**
-     * <p> la liste est tout les effets cummulé par le Personnage.
-     */
-    private ArrayList<Effects> effects;
-
-    /**
      * <p> le constructor definie un arrayList pour {@link #coordinate}
      * et defini n.
      * 
@@ -43,8 +38,6 @@ public class Personnage {
      * qui sont placé par la suite dans {@link #coordinate}[0]
      */
     protected Personnage(int n, int[] coordinate) {
-        this.effects = new ArrayList<Effects>();
-
         this.coordinate = new ArrayList<int[]>();
         this.coordinate.add(coordinate);
 

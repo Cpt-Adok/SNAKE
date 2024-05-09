@@ -7,20 +7,14 @@ import personnages.Player;
 
 public class Main {
     public static void main(String[] args) {
-        // Items[] items = {Items.BANANE, Items.FRAISE, Items.ORANGE};
+        int n = 2;
+        Map map = new Map(10, 10);
 
-        // Map map = new Map(10, 10);
-        
-        // map.ajoutBordure();
-        // map.addItems(new Items[]{Items.BANANE, Items.MUR, Items.FRAISE}, 3);
+        Player player1 = new Player(n, new int[]{1, 1});
+        Player player2 = new Player(n, new int[]{9, 9});
 
-        // System.out.println(map.getStringGrid());
-
-        Player player = new Player(0, new int[]{1, 1});
-        System.out.println("donne moi w s d q");
-        player.changeCoordinate();
-    
-
-        System.out.println(player.getCoordinate()[0] + "  " + player.getCoordinate()[1]);
+        while(!map.isGameOver(player1.getCoordinate()) || !map.isGameOver(player2.getCoordinate())) {
+            player1.changeCoordinate();
+        }
     }
 }
