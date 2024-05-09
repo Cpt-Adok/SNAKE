@@ -14,7 +14,7 @@ LIB_DIR = lib
 JAR = $(LIB_DIR)/*
 
 # main
-all: $(MAIN_FILE) run clean 
+all: clean $(MAIN_FILE) run clean 
 
 $(MAIN_FILE) : $(BIN_DIR)/$(MAIN_FILE).class
 

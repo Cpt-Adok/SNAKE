@@ -1,13 +1,14 @@
-package Environnements;
+package environnements;
 
 import java.lang.Object;
 import java.util.Random;
 
-import Item.Effects;
-import Item.Items;
+import item.Effects;
+import item.Items;
 
 public class Map {
     private Object[][] grid;
+    private Object[][] emptyGrid;
     private Random random;
     
     public int longueur;
@@ -20,15 +21,14 @@ public class Map {
         this.random = new Random();
 
         this.grid = new Object[this.largeur][this.longueur];
+        this.emptyGrid = new Object[this.largeur][this.longueur];
+
         this.fillGrid();
     }
 
     public Items getCoordinate(int x, int y) {
         if (x >= 0 && x < grid[0].length && y >= 0 && y < grid.length) {
-            Object coordinate = grid[y][x];
-            if (coordinate instanceof Items) {
-                return ((Items)coordinate);
-            } 
+            return (Items)grid[y][x];
         }
         return null;
     }
@@ -38,9 +38,13 @@ public class Map {
     }
 
     public boolean isGameOver(int[] coordinate) {
-        if (getCoordinate(longueur, largeur) != null && 
-            getCoordinate(longueur, largeur).getEffects() == Effects.IMPASSABLE) return true;
-        return false;
+        Items item = getCoordinate(coordinate[0], coordinate[1]);
+
+        if (item != null) {
+            Effects effect = item.getEffects();
+            return effect == Effects.IMPASSABLE;
+        }
+        return true;
     }
 
     public String getStringGrid() {
@@ -70,6 +74,10 @@ public class Map {
         return grid;
     }
 
+    public void cleanGrid() {
+        this.grid = this.emptyGrid;
+    }
+
     public void ajoutBordure() {
         for(int i = 0; i < this.grid.length; i++) {
             for(int k = 0; k < this.grid[0].length; k++) {
@@ -84,6 +92,16 @@ public class Map {
         for(int i = 0; i < this.grid.length; i++) {
             for(int k = 0; k < this.grid[0].length; k++) {
                 this.grid[i][k] = Items.VOID;
+            }
+        }
+    }
+
+    public void addCoordinate(int[] coordinate, Items items) {
+        for(int i = 0; i < this.grid.length; i++) {
+            for(int k = 0; k < this.grid[0].length; k++) {
+                if(i == coordinate[1] && k == coordinate[0]) {
+                    this.grid[i][k] = items;
+                }
             }
         }
     }

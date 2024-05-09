@@ -2,8 +2,8 @@ package personnages;
 
 import java.util.ArrayList;
 
-import Item.Effects;
-import Item.Items;
+import item.Effects;
+import item.Items;
 
 public class Personnage {
     /**
@@ -17,6 +17,8 @@ public class Personnage {
      * que la manche est fini seulement pour le personnage.
      */
     private int round;
+
+    private String nom;
 
     /**
      * <p> la liste de toute les coordonnées en fonction de N. Si N = 2,
@@ -32,19 +34,28 @@ public class Personnage {
      * <p> le constructor definie un arrayList pour {@link #coordinate}
      * et defini n.
      * 
+     * @param name est le nom du personnage.
      * @param n est une variable qui contient le nombre de tour avant 
      * l'augmentation de taille.
      * @param coordinate est la variable qui contient les coordonnées 
      * qui sont placé par la suite dans {@link #coordinate}[0]
      */
-    protected Personnage(int n, int[] coordinate) {
+    protected Personnage(String name, int n, int[] coordinate) {
         this.coordinate = new ArrayList<int[]>();
         this.coordinate.add(coordinate);
 
         this.n = n;
     }
 
+    public String getName() {
+        return nom;
+    }
+
     public int incrementRound() {
         return ++this.round;
+    }
+
+    public int[] getCoordinate() {
+        return coordinate.get(0);
     }
 }

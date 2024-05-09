@@ -1,5 +1,7 @@
 package personnages;
 
+import static java.util.Arrays.toString;
+
 import java.util.Scanner;
 
 /**
@@ -16,32 +18,24 @@ public class Player extends Personnage {
      * est représenté comme <strong>{x, y}</strong> et qui represente les 
      * coordonnées de la tête du personnage.
      */
-    public Player(int n, int[] coordinate) {
-        super(n, coordinate);
+    public Player(String name, int n, int[] coordinate) {
+        super(name, n, coordinate);
     }
 
-    public void changeCoordinate() {
-        Scanner scanner = new Scanner(System.in);
-        String value;
-
-        do {
-            value = scanner.nextLine();
-        } while (!moveCoordinate((int)'w'));
-        
-        scanner.close();
+    public boolean changeCoordinate(String input) {
+        if (input.length() > 0) {
+            return moveCoordinate(input.charAt(0));
+        }
+        return false;
     }
-
-    public int[] getCoordinate() {
-        return coordinate.get(0);
-    }
-
+    
     private boolean moveCoordinate(int keys) {
         switch (keys) {
-            case 119:    Mouvement.HAUT.editCoordinate(getCoordinate()); break;
-            case 115:    Mouvement.BAS.editCoordinate(getCoordinate()); break;
-            case 97:     Mouvement.GAUCHE.editCoordinate(getCoordinate()); break;
-            case 100:    Mouvement.DROITE.editCoordinate(getCoordinate()); break;
-            default:    return false;
+            case 0x77:    Mouvement.HAUT.editCoordinate(getCoordinate()); break;    // w
+            case 0x73:    Mouvement.BAS.editCoordinate(getCoordinate()); break;     // s
+            case 0x61:    Mouvement.GAUCHE.editCoordinate(getCoordinate()); break;  // a
+            case 0x64:    Mouvement.DROITE.editCoordinate(getCoordinate()); break;  // d
+            default:      return false;
         }
         return true;
     }

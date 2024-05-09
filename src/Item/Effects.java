@@ -1,4 +1,4 @@
-package Item;
+package item;
 
 /**
  * <p>Ceci est l'enumération où il y aura tout les effets disponible dans le projet.
@@ -26,5 +26,7 @@ public enum Effects {
     /**
      * <p> impossible à passer à travers.
      */
-    IMPASSABLE, Effects;
+    IMPASSABLE,
+    
+    VOID;
 }

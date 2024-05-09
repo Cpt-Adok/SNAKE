@@ -1,4 +1,4 @@
-package Item;
+package item;
 
 /**
  * Cette enumération contient tout les items à effets disponnible dans le jeu.
@@ -8,7 +8,8 @@ public enum Items {
 
     BODY("corps", Effects.IMPASSABLE),
     HEAD("tete", Effects.IMPASSABLE),
-    VOID("void", null),
+
+    VOID("void", Effects.VOID),
 
     FRAISE("fraise", Effects.INVINCIBILITY),
     ORANGE("orange", Effects.POWER),
