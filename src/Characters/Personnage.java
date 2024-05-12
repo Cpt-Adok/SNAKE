@@ -1,6 +1,7 @@
 package Characters;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import Objects.Snake;
 
@@ -12,7 +13,6 @@ public class Personnage {
     private int n;
     private int round;
     private int size = 0;
-    private Snake head = Snake.HEAD;
 
     /**
      * <p> la liste de toute les coordonnées en fonction de N. Si N = 2,
@@ -28,11 +28,10 @@ public class Personnage {
      * <p> le constructor definie un arrayList pour {@link #coordinate}
      * et defini n.
      * 
-     * @param name est le nom du personnage.
      * @param n est une variable qui contient le nombre de tour avant 
      * l'augmentation de taille.
      * @param coordinate est la variable qui contient les coordonnées 
-     * qui sont placé par la suite dans {@link #coordinate}[0]
+     * qui sont placé par la suite dans {@link #coordinate}[0]}
      */
     protected Personnage(int n, int[] coordinate) {
         this.coordinate = new ArrayList<int[]>();
@@ -42,8 +41,8 @@ public class Personnage {
     } 
 
     /**
-     * cette fonction retourne la premiere coordonnée de la liste {@link 
-     * #coordinate} qui la tête du personnage 
+     * <p> cette fonction retourne la premiere coordonnée de la liste 
+     * {@link #coordinate} qui la tête du personnage.
      * @return la tête du personnage.
      */
     public int[] getPrimaryCoordinate() {
@@ -51,8 +50,8 @@ public class Personnage {
     }
 
     /**
-     * cette fonction retourne toute la liste {@link #coordinate} de 
-     * coordonnée du serpent.
+     * <p> cette fonction retourne toute la liste 
+     * {@link #coordinate} de coordonnée du serpent.
      * @return toute la liste des coordonnées du serpent
      */
     public ArrayList<int[]> getCoordinate() {
@@ -95,12 +94,12 @@ public class Personnage {
     /**
      * <p> cette fonction est très pratique aggrandir le serpent 
      * car elle garde la derniere coordonnée et si on la fusionne
-     * avec {@link #moveToLatestCoordinate()}, on peut l'utiliser
+     * avec {@link #increaseSnake()}, on peut l'utiliser
      * ajouter la coordonnée pour justement l'aggrandir. 
      * @return garde la derniere coordonnée du serpent (sa queue)
      */
     public int[] keepLatestCoordinate() {
-        return this.coordinate.get(getCoordinate().size()-1);
+        return this.coordinate.get(getCoordinate().size()-1).clone();
     }
 
     /**
@@ -109,7 +108,7 @@ public class Personnage {
      * le serpent.
      * @param coordinate ajout de la nouvelle coordonnée
      */
-    public void moveToLatestCoordinate(int[] coordinate) {
+    public void increaseSnake(int[] coordinate) {
         this.coordinate.add(coordinate);
     }
 
@@ -118,19 +117,23 @@ public class Personnage {
      * serpent.
      * @param mouvements le mouvement utilisé pour deplacer le serpent
      */
-    protected void moveSnake(Mouvements mouvements) {
-        for (int[] coordinate : this.coordinate) {
-            mouvements.editCoordinate(coordinate);
+    public void moveSnake(Mouvements mouvements) {
+        mouvements.editCoordinate(this.coordinate.get(0));
+
+        for(int i = this.coordinate.size() - 1; i>1; i--) {
+            int[] value = this.coordinate.get(i-1);
+            this.coordinate.set(i, value);
         }
     }   
     
-    public Mouvements getMouvement(int keys) {
+    public Mouvements getMouvement(Integer keys) {
         switch (keys) {
-            case 0x77:    return Mouvements.HAUT;    // w
-            case 0x73:    return Mouvements.BAS;     // s
-            case 0x61:    return Mouvements.GAUCHE;  // a
-            case 0x64:    return Mouvements.DROITE;  // d
-            default:      return null;
+            case 0x77:      return Mouvements.HAUT;    // w
+            case 0x73:      return Mouvements.BAS;     // s
+            case 0x61:      return Mouvements.GAUCHE;  // a
+            case 0x64:      return Mouvements.DROITE;  // d
+            case null:      return null;
+            default:        return null;
         }
     }
 }

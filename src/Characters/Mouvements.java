@@ -22,17 +22,17 @@ public enum Mouvements {
 
     /**
      * GAUCHE prend comme coordonnée (1, 0) pour se déplacer. 
-     * @param x = 1
-     * @param y = 0
-     */
-    GAUCHE(1, 0),
-
-    /**
-     * @DROITE prend comme coordonnée (-1, 0) pour se déplacer. 
      * @param x = -1
      * @param y = 0
      */
-    DROITE(-1, 0);
+    GAUCHE(-1, 0),
+
+    /**
+     * @DROITE prend comme coordonnée (-1, 0) pour se déplacer. 
+     * @param x = 1
+     * @param y = 0
+     */
+    DROITE(1, 0);
 
     private final int deltaX;
     private final int deltaY;

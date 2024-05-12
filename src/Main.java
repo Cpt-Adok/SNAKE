@@ -1,31 +1,31 @@
-import Characters.*;
+import Characters.Personnage;
+import Characters.Players;
 import Display.Terminal;
 import Environnement.Map;
 
 public class Main {
-    // public static void print(Players player) {
-    //     for (int[] coordinate : player.getCoordinate()) {
-    //         for(int value : coordinate) {
-    //             System.out.print(value + "      ");
-    //         }
-    //         System.out.println();
-    //     }
-    //     System.out.println();
-    // }
-
     public static void main(String[] args) {
-        // Players player = new Players(new int[] {-1, 1}, 2);
+        int N = 2;
 
-        // while(true) {
-        //     int[] value = player.keepLatestCoordinate();
+        Personnage[] personnages = new Personnage[] {
+            new Players(new int[] {1, 1}, N),
+            new Players(new int[] {8, 8}, N)
+        };
 
-        //     player.incrementRound();
-        //     print(player);
-        //     if (player.isIncreaseSize()) player.moveToLatestCoordinate(value);
+        Map map = new Map(10, 10);
+        // map.addEdges();
+
+        Terminal.run(personnages, map, N);
+
+        // Players player = new Players(new int[]{1, 1}, 1);
+        // player.increaseSnake(player.keepLatestCoordinate());
+        // player.moveCoordinate(0x77);
+        
+        // for(int[] value : player.getCoordinate()) {
+        //     for (int valueInt : value) {
+        //         System.out.print(valueInt + "  ");
+        //     }
+        //     System.out.println();
         // }
-
-        Terminal.run(new Personnage[]{
-            new Players(new int[] {1, 1}, 2)
-        }, new Map(10, 10), 2);
     }
 }

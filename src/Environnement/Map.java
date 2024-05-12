@@ -110,15 +110,44 @@ public class Map {
         }
     }
     
-    public boolean isGamefinished(int key, Personnage personnage) {
+    public void placePersonnages(Personnage personnage) {
+        int index = 0;
+
+        for (int[] coordinate : personnage.getCoordinate()) {
+            if (index == 0) {
+                this.grid[coordinate[1]][coordinate[0]] = Snake.HEAD;
+                
+            } else {
+                this.grid[coordinate[1]][coordinate[0]] = Snake.BODY;
+            }
+            index++;
+        }
+    }
+
+    private boolean isGamefinishedImpassable(int key, Personnage personnage) {
         int[] coordinate = personnage.getMouvement(key).getCoordinate();
         int[] playerCoordinate = personnage.getPrimaryCoordinate();
-        
 
         int y = coordinate[1] + playerCoordinate[1];
         int x = coordinate[0] + playerCoordinate[0];
 
-        return this.getGrid()[y][x] instanceof Snake;
+        Object grid = this.getGrid()[y][x];
+
+        if (grid instanceof Snake) return ((Snake)grid).getEffects() == Effects.IMPASSABLE;
+        else if (grid instanceof Items) return ((Items)grid).getEffects() == Effects.IMPASSABLE;
+        else return false;
+    }
+
+    public boolean isGameOver(int key, Personnage personnage) {
+        int[] personnageCoordinate = personnage.getPrimaryCoordinate();
+
+        boolean isOutX = personnageCoordinate[0] < 0 || this.grid[0].length - 1 < personnageCoordinate[0];
+        boolean isOutY = personnageCoordinate[1] < 0 || this.grid.length - 1 < personnageCoordinate[1];
+        
+        if (isOutX || isOutY) {
+            return true;
+        }
+        return false;
     }
 
     private void fillGrid() {
