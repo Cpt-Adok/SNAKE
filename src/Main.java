@@ -1,31 +1,23 @@
 import Characters.Personnage;
 import Characters.Players;
 import Display.Terminal;
+import Display.TerminalDisplay;
 import Environnement.Map;
+import Objects.Fruits;
+import Objects.Items;
 
 public class Main {
     public static void main(String[] args) {
-        int N = 2;
+        Personnage.n = 2;
+
+        Map map = new Map(30, 30);
 
         Personnage[] personnages = new Personnage[] {
-            new Players(new int[] {1, 1}, N),
-            new Players(new int[] {8, 8}, N)
+            new Players("d", new int[] {1, 1}),
+            new Players("e", new int[] {28, 28})
         };
 
-        Map map = new Map(10, 10);
-        // map.addEdges();
-
-        Terminal.run(personnages, map, N);
-
-        // Players player = new Players(new int[]{1, 1}, 1);
-        // player.increaseSnake(player.keepLatestCoordinate());
-        // player.moveCoordinate(0x77);
-        
-        // for(int[] value : player.getCoordinate()) {
-        //     for (int valueInt : value) {
-        //         System.out.print(valueInt + "  ");
-        //     }
-        //     System.out.println();
-        // }
+        Terminal.edges = true;
+        new Terminal(map, personnages);
     }
 }

@@ -1,21 +1,37 @@
 package Display;
 
+import java.io.IOError;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map.Entry;
 import java.util.Scanner;
 
-import Characters.Personnage;
-import Characters.Players;
-import Characters.Robot;
-import Environnement.Map;
-import Objects.Fruits;
-import Objects.Items;
-import Objects.Snake;
+import Characters.*;
+import Environnement.*;
+import Objects.*;
 
 public class Terminal {
-    private static Scanner scanner = new Scanner(System.in);
-    private static String name = new String();
-    
+    private static Scanner scanner;
     private static Map map;
- 
+    private static Personnage[] personnages;
+
+    public static boolean edges = false;
+
+    public Terminal(Map m, Personnage[] personnage) {
+        scanner = new Scanner(System.in);
+        personnages = personnage;
+        map = m;
+
+        run();
+        if (edges) map.addEdges();
+    }
+
+    private static void placePersonnages(Personnage[] personnages) {
+        for(Personnage personnage : personnages) {
+            map.placePersonnages(personnage);
+        }
+    }
+
     /**
      * <p> Cette fonction est uniquement destiné pour la classe
      * Players pour recuperer l'input dans le terminal.
@@ -35,60 +51,19 @@ public class Terminal {
         return input.intValue();
     }
 
-    /**
-     *  <p> print toute la map.
-     * @param map
-     */
-    private static void printMap(Map map) {
-        Object[][] mapObjects = map.getGrid(); 
-
-        for (int i = 0; i<mapObjects.length; i++) {
-            for(int k = 0; k<mapObjects[0].length; k++) {
-                if (mapObjects[i][k] instanceof Items) System.out.print(((Items)mapObjects[i][k]).getName() + "  ");
-                if (mapObjects[i][k] instanceof Fruits) System.out.print(((Fruits)mapObjects[i][k]).getName() + "  ");
-                if (mapObjects[i][k] instanceof Snake) System.out.print(((Snake)mapObjects[i][k]).getName() + "  ");
-            }
-            System.out.println();
-        }       
-    }
-
-    private static void printPersonnages(Personnage[] personnages) {
-        for(int i = 0; i<personnages.length; i++) {
-            int[] coordinate = personnages[i].getPrimaryCoordinate();
-            System.out.println("Joueur " + (i+1) + " sont aux coordonnées : {" + coordinate[0] + "," + coordinate[1] + "}");
-        }
-    }
-    
-    /**
-     * cette fonction clear le terminal et le remet en
-     * haut a gauche de la ligne.
-     */
-    private static void clearTerminal() {
-        System.out.println("\u001b[2J \u001b[H");
-    }
-
-    private static void placePersonnages(Personnage[] personnages) {
-        for(Personnage personnage : personnages) {
-            map.placePersonnages(personnage);
-        }
-    }
-
     private static boolean playerRound(Players player) {
-        printMap(map);
+        TerminalDisplay.printMap(map, personnages);
+        // TerminalDisplay.printMapType(map);
         
         int[] latestCoordinate = player.keepLatestCoordinate();
         int input = getInput(scanner, player);
         player.moveCoordinate(input);
 
-        if(map.isGameOver(input, player)) {
-            System.out.println("GameOver");
-            return false;
-        }
-
+        if(map.isGameOver(input, player)) {TerminalDisplay.clearTerminal(); System.out.println("GameOver"); return false;}
         if(player.isIncreaseSize()) player.increaseSnake(latestCoordinate);
 
-        clearTerminal();
-        map.clearMap();
+        TerminalDisplay.clearTerminal();
+        map.clearMap(edges);
         player.incrementRound();
         return true;
     }
@@ -111,29 +86,25 @@ public class Terminal {
         return false;
     }
 
-    private static void sleepTerminal(long value) {
-        try {Thread.sleep(value);}
-        catch (InterruptedException e){ e.printStackTrace();}
-    }
-
-    public static void run(Personnage[] personnages, Map m, int n) {
+    private static void run() {
+        TerminalDisplay.clearTerminal();
+        if (edges) map.addEdges();
         boolean isNotGameOver = true;
-        map = m;
-        
+        int i = 0;
+
         // place les personnages dans la grille.
         placePersonnages(personnages);
-        // print dans le terminal.
-        printPersonnages(personnages);
 
         while(isNotGameOver) {
-            for (int i = 0; i<personnages.length; i++) {
-                System.out.println("\nJoueur " + (i+1) + " :");
-                isNotGameOver = instancePersonnage(personnages[i]);
-                if (isNotGameOver) placePersonnages(personnages); 
+            for (i = 0; i<personnages.length; i++) {
+                Personnage personnage = personnages[i];
+
+                System.out.println("\nJoueur " + (i+1) + " : " + personnage.getName());
+                isNotGameOver = instancePersonnage(personnage);
+                if(isNotGameOver) placePersonnages(personnages);
                 else break;
             }
         }
-
-        System.out.println("bien joué!");
+        System.out.println("Le joueur " + (i+1) + " à perdu !");
     }
 }

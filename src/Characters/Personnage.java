@@ -10,9 +10,10 @@ import Objects.Snake;
  * personnage jouable.
  */
 public class Personnage {
-    private int n;
+    public static int n;
     private int round;
     private int size = 0;
+    private String name;
 
     /**
      * <p> la liste de toute les coordonnées en fonction de N. Si N = 2,
@@ -33,11 +34,11 @@ public class Personnage {
      * @param coordinate est la variable qui contient les coordonnées 
      * qui sont placé par la suite dans {@link #coordinate}[0]}
      */
-    protected Personnage(int n, int[] coordinate) {
+    protected Personnage(String name, int[] coordinate) {
         this.coordinate = new ArrayList<int[]>();
         this.coordinate.add(coordinate);
 
-        this.n = n;
+        this.name = name;
     } 
 
     /**
@@ -118,13 +119,19 @@ public class Personnage {
      * @param mouvements le mouvement utilisé pour deplacer le serpent
      */
     public void moveSnake(Mouvements mouvements) {
-        mouvements.editCoordinate(this.coordinate.get(0));
+        
+        int[] oldHeadPosition = getPrimaryCoordinate().clone();
 
-        for(int i = this.coordinate.size() - 1; i>1; i--) {
-            int[] value = this.coordinate.get(i-1);
-            this.coordinate.set(i, value);
+        for (int i = this.coordinate.size() - 1; i > 0; i--) {
+            this.coordinate.set(i, this.coordinate.get(i - 1).clone());
         }
+        mouvements.editCoordinate(oldHeadPosition);
+        this.coordinate.set(0, oldHeadPosition);
     }   
+
+    public String getName() {
+        return name;
+    }
     
     public Mouvements getMouvement(Integer keys) {
         switch (keys) {

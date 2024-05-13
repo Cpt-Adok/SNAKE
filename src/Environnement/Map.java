@@ -44,6 +44,10 @@ public class Map {
         this.largeur = largeur;
 
         this.grid = new Object[this.longueur][this.largeur];
+        
+        this.ObjectItems = new ArrayList<>();
+        this.coordinateItems = new ArrayList<>();
+
         this.fillGrid();
     }
 
@@ -51,8 +55,9 @@ public class Map {
      * <p> cette fonction clear toute la grille qui 
      * contient le jeu.
      */
-    public void clearMap() {
+    public void clearMap(boolean edges) {
         this.fillGrid();
+        if(edges) this.addEdges();
     }
 
     /**
@@ -96,6 +101,7 @@ public class Map {
             randomize(objects[i], value);
         }
         randomize(objects[lengthObjects], number);
+        placeObjects();
     }
 
     /** 
@@ -124,12 +130,11 @@ public class Map {
         }
     }
 
-    private boolean isGamefinishedImpassable(int key, Personnage personnage) {
-        int[] coordinate = personnage.getMouvement(key).getCoordinate();
+    private boolean isGamefinishedImpassable(Personnage personnage) {
         int[] playerCoordinate = personnage.getPrimaryCoordinate();
 
-        int y = coordinate[1] + playerCoordinate[1];
-        int x = coordinate[0] + playerCoordinate[0];
+        int y = playerCoordinate[1];
+        int x = playerCoordinate[0];
 
         Object grid = this.getGrid()[y][x];
 
@@ -147,7 +152,8 @@ public class Map {
         if (isOutX || isOutY) {
             return true;
         }
-        return false;
+        System.out.println(isGamefinishedImpassable(personnage));
+        return isGamefinishedImpassable(personnage);
     }
 
     private void fillGrid() {
@@ -158,17 +164,24 @@ public class Map {
         }
     }
 
-    private void randomize(Object item, int number) {
+    private void randomize(Object object, int number) {
         Random random = new Random();
 
-        for(int i = 0; i<number; i++) {
-            int x = random.nextInt(1, this.grid[0].length);
-            int y = random.nextInt(1, this.grid.length);
+        for (int i = 0; i<number; i++) {
+            int x = random.nextInt(this.grid[0].length);
+            int y = random.nextInt(this.grid.length);
 
-            if(!(getGrid()[y][x] instanceof Items)) {this.coordinateItems.add(new int[]{y, x}); this.ObjectItems.add(grid);}
-            else if(!(getGrid()[y][x] instanceof Snake)) {this.coordinateItems.add(new int[]{y, x}); this.ObjectItems.add(grid);}
-            else if(!(getGrid()[y][x] instanceof Fruits)) {this.coordinateItems.add(new int[]{y, x}); this.ObjectItems.add(grid);}
-            else i--;  
+            if(!((getGrid()[y][x] instanceof Snake) || (getGrid()[y][x] instanceof Fruits))) {
+                if ((Items)getGrid()[y][x] == Items.VOID) {
+                    this.coordinateItems.add(new int[] {x, y});
+                    this.ObjectItems.add(object);
+                } else {
+                    i--;
+                }
+            } 
+            else {
+                i--;
+            }
         }
     }
 }

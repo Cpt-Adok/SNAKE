@@ -1,8 +1,8 @@
 package Characters;
 
 public class Players extends Personnage {
-    public Players(int[] coordinate, int n) {
-        super(n, coordinate);
+    public Players(String name, int[] coordinate) {
+        super(name, coordinate);
     }
     
     public Integer changeCoordinate(String input) {
