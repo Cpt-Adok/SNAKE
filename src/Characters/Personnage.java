@@ -14,6 +14,7 @@ public class Personnage {
     private int round;
     private int size = 0;
     private String name;
+    private String effect;
 
     /**
      * <p> la liste de toute les coordonnées en fonction de N. Si N = 2,
@@ -132,15 +133,23 @@ public class Personnage {
     public String getName() {
         return name;
     }
+
+    public int getSize() {
+        return size;
+    }
+
+    public String getEffects(Object item) {
+        return new String();
+    }
     
     public Mouvements getMouvement(Integer keys) {
         switch (keys) {
-            case 0x77:      return Mouvements.HAUT;    // w
-            case 0x73:      return Mouvements.BAS;     // s
-            case 0x61:      return Mouvements.GAUCHE;  // a
-            case 0x64:      return Mouvements.DROITE;  // d
-            case null:      return null;
-            default:        return null;
+            case 0x77: case 0x7A:      return Mouvements.HAUT;    // w ou z
+            case 0x73:                 return Mouvements.BAS;     // s
+            case 0x61: case 0x71:      return Mouvements.GAUCHE;  // a
+            case 0x64:                 return Mouvements.DROITE;  // d
+            case null:                 return null;
+            default:                   return null;
         }
     }
 }

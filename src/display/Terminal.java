@@ -14,6 +14,7 @@ public class Terminal {
     private static Scanner scanner;
     private static Map map;
     private static Personnage[] personnages;
+    private int round = 0;
 
     public static boolean edges = false;
 
@@ -86,7 +87,7 @@ public class Terminal {
         return false;
     }
 
-    private static void run() {
+    private void run() {
         TerminalDisplay.clearTerminal();
         if (edges) map.addEdges();
         boolean isNotGameOver = true;
@@ -99,11 +100,17 @@ public class Terminal {
             for (i = 0; i<personnages.length; i++) {
                 Personnage personnage = personnages[i];
 
-                System.out.println("\nJoueur " + (i+1) + " : " + personnage.getName());
+                int[] coordinate = personnage.getPrimaryCoordinate();
+
+                System.out.println("Round : " + this.round + " | N : " + Personnage.n);
+                System.out.println("  Joueur " + (i+1) + " : " + personnage.getName() + 
+                " (" + coordinate[0]+", "+ coordinate[1] +") | size : " + personnage.getSize());
+
                 isNotGameOver = instancePersonnage(personnage);
                 if(isNotGameOver) placePersonnages(personnages);
                 else break;
             }
+            this.round++;
         }
         System.out.println("Le joueur " + (i+1) + " à perdu !");
     }

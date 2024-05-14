@@ -52,7 +52,7 @@ public class TerminalDisplay {
 
     private static void printSnake(Snake item, Personnage[] personnages, int x, int y) {
         switch (item) {
-            case BODY: System.out.print(" \uF353 "); break;
+            case BODY: System.out.print(" = "); break;
             case HEAD: printHead(personnages, x, y); break;
         }
     }
@@ -115,18 +115,29 @@ public class TerminalDisplay {
         if (y < map.length - 1) isWall[1] = map[y + 1][x] == Items.WALL; else isWall[1] = false;
         if (x > 0) isWall[2] = map[y][x - 1] == Items.WALL; else isWall[2] = false;
         if (x < map[0].length - 1) isWall[3] = map[y][x + 1] == Items.WALL; else isWall[3] = false;
-    
-        if (isWall[0] && isWall[1] && isWall[2] && isWall[3]) {System.out.print("\u2550\u256C\u2550");return;}
-        else if (isWall[0] && isWall[1] && isWall[3]) {System.out.print("\u2560");return;}
-        else if (isWall[0] && isWall[1] && isWall[2]) {System.out.print("\u2563");return;}
-        else if (isWall[0] && isWall[2] && isWall[3]) {System.out.print("\u2550\u2569\u2550");return;}
-        else if (isWall[1] && isWall[2] && isWall[3]) {System.out.print("\u2550\u2566\u2550");return;}
-        else if (isWall[0] && isWall[1]) {System.out.print("\u2551");return;}
-        else if (isWall[2] && isWall[3]) {System.out.print("\u2550\u2550\u2550");return;}
-        else if (isWall[0] && isWall[2]) {System.out.print("\u255D   ");return;}
-        else if (isWall[0] && isWall[3]) {System.out.print("\u255A");return;}
-        else if (isWall[1] && isWall[2]) {System.out.print("\u2557   ");return;}
-        else if (isWall[1] && isWall[3]) {System.out.print("\u2554");return;}   
-        else {System.out.print("\u2550\u256C\u2550");return;}
+
+        System.out.print(whichWall(isWall));
     }    
+
+    private static String whichWall(boolean[] isWall) {
+        String positionWall = new String();
+
+        if (isWall[0] && isWall[1] && isWall[2] && isWall[3]) positionWall = "\u2550\u256C\u2550";
+        
+        else if (isWall[0] && isWall[1] && isWall[3]) positionWall = "\u2560";
+        else if (isWall[0] && isWall[1] && isWall[2]) positionWall = "\u2563";
+        else if (isWall[0] && isWall[2] && isWall[3]) positionWall = "\u2550\u2569\u2550";
+        else if (isWall[1] && isWall[2] && isWall[3]) positionWall = "\u2550\u2566\u2550";
+        
+        else if (isWall[0] && isWall[1]) positionWall = "\u2551";
+        else if (isWall[2] && isWall[3]) positionWall = "\u2550\u2550\u2550";
+        else if (isWall[0] && isWall[2]) positionWall = "\u255D   ";
+        else if (isWall[0] && isWall[3]) positionWall = "\u255A";
+        else if (isWall[1] && isWall[2]) positionWall = "\u2557   ";
+        else if (isWall[1] && isWall[3]) positionWall = "\u2554";
+
+        else positionWall = "\u2550\u256C\u2550";
+
+        return positionWall;
+    }
 }
