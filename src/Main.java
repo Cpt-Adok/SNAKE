@@ -1,6 +1,6 @@
 import Characters.Personnage;
 import Characters.Players;
-import Display.Terminal;
+import display.Terminal;
 import Environnement.Map;
 
 public class Main {

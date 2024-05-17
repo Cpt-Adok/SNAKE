@@ -1,4 +1,4 @@
-package Display;
+package display;
 
 import java.io.IOError;
 import java.io.IOException;
@@ -14,7 +14,7 @@ public class Terminal {
     private static Scanner scanner;
     private static Map map;
     private static Personnage[] personnages;
-    private int round = 0;
+    public int round = 0;
 
     public static boolean edges = false;
 

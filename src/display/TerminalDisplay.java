@@ -1,4 +1,4 @@
-package Display;
+package display;
 
 import Objects.Fruits;
 import Objects.Items;
