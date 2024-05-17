@@ -1,22 +1,23 @@
 package Display;
 
-import java.io.IOError;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map.Entry;
 import java.util.Scanner;
 
-import Characters.*;
-import Environnement.*;
-import Objects.*;
+import Environnements.Map;
+import Objets.Effects;
+import Objets.Items;
+import Personnages.Mouvements;
+import Personnages.Personnage;
+import Personnages.Player;
+import Personnages.Robot;
 
 public class Terminal {
-    private static Scanner scanner;
-    private static Map map;
-    private static Personnage[] personnages;
     private int round = 0;
 
-    public static boolean edges = false;
+    private static Map map;
+    private static Personnage[] personnages;
+
+    private static Scanner scanner;
+
 
     public Terminal(Map m, Personnage[] personnage) {
         scanner = new Scanner(System.in);
@@ -24,9 +25,43 @@ public class Terminal {
         map = m;
 
         run();
-        if (edges) map.addEdges();
     }
 
+    /**
+     * Cette fonction est uniquement destiné pour la classe
+     * Players pour recuperer l'input dans le terminal.
+     * @param player
+     * @return il retourne int qui est le char en ascii
+     */
+    private static int getInput(Player player) {
+        String value = new String();
+        Integer input = null;
+
+        do {
+            value = scanner.nextLine();
+            input = changeCoordinate(value);
+        }while(player.getMouvement(input) == null);
+
+        return input.intValue();
+    }
+
+    /**
+     * transforme le String en prennant le premier char et 
+     * le mets en ascii dans la classe Integer.
+     * @param input
+     * @return
+     */
+    private static Integer changeCoordinate(String input) {
+        if (input.length() > 0) {
+            return (int)input.charAt(0);
+        }
+        return null;
+    }
+
+    /**
+     * place tout les personnages dans la fonction {@link #map.placePersonnages()}
+     * @param personnages
+     */
     private static void placePersonnages(Personnage[] personnages) {
         for(Personnage personnage : personnages) {
             map.placePersonnages(personnage);
@@ -34,49 +69,40 @@ public class Terminal {
     }
 
     /**
-     * <p> Cette fonction est uniquement destiné pour la classe
-     * Players pour recuperer l'input dans le terminal.
-     * @param scanner
+     * cette fonction est spécialement conçu pour gerer le gameplay du joueur.
      * @param player
-     * @return il retourne int qui est le char en ascii
+     * @return
      */
-    private static int getInput(Scanner scanner, Players player) {
-        String value = new String();
-        Integer input = null;
-
-        do {
-            value = scanner.nextLine();
-            input = player.changeCoordinate(value);
-        }while(player.getMouvement(input) == null);
-
-        return input.intValue();
-    }
-
-    private static boolean playerRound(Players player) {
-        TerminalDisplay.printMap(map, personnages);
-        // TerminalDisplay.printMapType(map);
-        
-        int[] latestCoordinate = player.keepLatestCoordinate();
-        int input = getInput(scanner, player);
+    private static boolean playerRound(Player player) {
+        int input = getInput(player);
         player.moveCoordinate(input);
 
-        if(map.isGameOver(input, player)) {TerminalDisplay.clearTerminal(); System.out.println("GameOver"); return false;}
-        if(player.isIncreaseSize()) player.increaseSnake(latestCoordinate);
+        int[] coordinate = player.getHeadCoordinate();
+        if(map.isGameOver(player.getHeadCoordinate()) || player.applyEffects(map.getEffect(coordinate))) return true;
 
-        TerminalDisplay.clearTerminal();
-        map.clearMap(edges);
-        player.incrementRound();
-        return true;
+        player.increaseRound();
+        return false;
     }
 
+    /**
+     * cette fonction est spécialement conçu pour gerer le gameplay du robot.
+     * @param player
+     * @return
+     */
     private static boolean robotRound(Robot robot) {
         return false;
     }
 
+    /**
+     * cette fonction cherche si le personnage mis en paramètre 
+     * est un {@link Player} ou un {@link Robot}.
+     * @param player
+     * @return
+     */
     private static boolean instancePersonnage(Personnage personnage) {
-        if (personnage instanceof Players) {
+        if (personnage instanceof Player) {
             // tour du Player
-            return playerRound((Players)personnage);   
+            return playerRound((Player)personnage);   
         }
 
         if (personnage instanceof Robot) {
@@ -87,31 +113,34 @@ public class Terminal {
         return false;
     }
 
+    /**
+     * la fonction principal qui lance tout le jeu en terminal.
+     */
     private void run() {
-        TerminalDisplay.clearTerminal();
-        if (edges) map.addEdges();
-        boolean isNotGameOver = true;
+        boolean isGameOver = false;
         int i = 0;
 
-        // place les personnages dans la grille.
-        placePersonnages(personnages);
-
-        while(isNotGameOver) {
+        while(!isGameOver) {
             for (i = 0; i<personnages.length; i++) {
                 Personnage personnage = personnages[i];
+                Display.clearTerminal();
 
-                int[] coordinate = personnage.getPrimaryCoordinate();
+                map.placeObjects();
+                placePersonnages(personnages);
 
-                System.out.println("Round : " + this.round + " | N : " + Personnage.n);
-                System.out.println("  Joueur " + (i+1) + " : " + personnage.getName() + 
-                " (" + coordinate[0]+", "+ coordinate[1] +") | size : " + personnage.getSize());
+                Display.printInformation(this.round, i, personnage);
 
-                isNotGameOver = instancePersonnage(personnage);
-                if(isNotGameOver) placePersonnages(personnages);
+                map.placeObjects();
+                Display.printMap(map.addEdges(), personnages);
+
+                isGameOver = instancePersonnage(personnage);
+                if(!isGameOver) placePersonnages(personnages);
                 else break;
+
+                map.clearMap();
             }
             this.round++;
         }
-        System.out.println("Le joueur " + (i+1) + " à perdu !");
+        System.out.println("GAMEOVER \nLe joueur " + (i+1) + " à perdu !");
     }
 }

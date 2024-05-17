@@ -1,4 +1,4 @@
-package Characters;
+package Personnages;
 
 /**
  * Cet enumerateur prend en charge tout les mouvements possible
@@ -48,7 +48,7 @@ public enum Mouvements {
      * @param coordinate prend principalement les coordonnées du 
      * personnage
      */
-    public void editCoordinate(int[] coordinate) {
+    public void updateCoordinate(int[] coordinate) {
         coordinate[0] += this.deltaX;
         coordinate[1] += this.deltaY;
     }

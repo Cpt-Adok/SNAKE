@@ -1,8 +1,10 @@
-package Objects;
+package Objets;
 
 public enum Items {
     WALL("WALL", Effects.IMPASSABLE),
-    VOID("VOID", Effects.VOID);
+    VOID("VOID", Effects.VOID),
+
+    FRAISE("FRAISE", Effects.DECREASESIZE);
 
     private final String NAME;
     private final Effects EFFECT;

@@ -1,20 +1,21 @@
-import Characters.Personnage;
-import Characters.Players;
 import Display.Terminal;
-import Environnement.Map;
+import Environnements.Map;
+import Objets.Items;
+import Personnages.Personnage;
+import Personnages.Player;
 
 public class Main {
     public static void main(String[] args) {
-        Personnage.n = 4;
+        Personnage.n = 2;
 
-        Map map = new Map(30, 30);
+        Map map = new Map(12, 30);
+
+        map.addObjects(Items.FRAISE, 5, 5);
 
         Personnage[] personnages = new Personnage[] {
-            new Players("Phillipe", new int[] {1, 1}),
-            new Players("Edouard", new int[] {28, 28})
+            new Player(new int[] {0, 0}, "Phillipe")
         };
 
-        Terminal.edges = true;
         new Terminal(map, personnages);
     }
 }
