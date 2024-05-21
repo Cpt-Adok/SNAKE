@@ -1,27 +1,23 @@
 package display;
 
-import java.io.IOError;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map.Entry;
 import java.util.Scanner;
 
 import Characters.*;
+import Connexion.Reseau;
 import Environnement.*;
-import Objects.*;
 
-public class Terminal {
-    private static Scanner scanner;
+public class TerminalChannel {
     private static Map map;
     private static Personnage[] personnages;
     public int round = 0;
+    public Reseau reseau;
 
     public static boolean edges = false;
 
-    public Terminal(Map m, Personnage[] personnage) {
-        scanner = new Scanner(System.in);
+    public TerminalChannel(Map m, Personnage[] personnage, Reseau r) {
         personnages = personnage;
         map = m;
+        this.reseau=r;
 
         run();
         if (edges) map.addEdges();
@@ -33,6 +29,12 @@ public class Terminal {
         }
     }
 
+    public int getInput(Reseau r){
+        char c=r.getLastedContent().charAt(0);
+        int i=c;
+        return i;
+    }
+
     /**
      * <p> Cette fonction est uniquement destiné pour la classe
      * Players pour recuperer l'input dans le terminal.
@@ -40,24 +42,13 @@ public class Terminal {
      * @param player
      * @return il retourne int qui est le char en ascii
      */
-    private static int getInput(Scanner scanner, Players player) {
-        String value = new String();
-        Integer input = null;
 
-        do {
-            value = scanner.nextLine();
-            input = player.changeCoordinate(value);
-        }while(player.getMouvement(input) == null);
-
-        return input.intValue();
-    }
-
-    private static boolean playerRound(Players player) {
+    public boolean playerRound(Players player) {
         TerminalDisplay.printMap(map, personnages);
         // TerminalDisplay.printMapType(map);
         
         int[] latestCoordinate = player.keepLatestCoordinate();
-        int input = getInput(scanner, player);
+        int input=getInput(null);
         player.moveCoordinate(input);
 
         if(map.isGameOver(input, player)) {TerminalDisplay.clearTerminal(); System.out.println("GameOver"); return false;}
@@ -73,7 +64,7 @@ public class Terminal {
         return false;
     }
 
-    private static boolean instancePersonnage(Personnage personnage) {
+    private boolean instancePersonnage(Personnage personnage) {
         if (personnage instanceof Players) {
             // tour du Player
             return playerRound((Players)personnage);   
@@ -87,7 +78,7 @@ public class Terminal {
         return false;
     }
 
-    public void run() {
+    public boolean run() {
         TerminalDisplay.clearTerminal();
         if (edges) map.addEdges();
         boolean isNotGameOver = true;
@@ -113,5 +104,7 @@ public class Terminal {
             this.round++;
         }
         System.out.println("Le joueur " + (i+1) + " à perdu !");
+        return false;
     }
 }
+

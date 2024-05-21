@@ -1,8 +1,6 @@
 package Characters;
 
 import java.util.ArrayList;
-//import java.util.Random;
-
 import javax.swing.JOptionPane;
 
 import Environnement.*;
@@ -10,18 +8,32 @@ import Objects.Effects;
 
 public class Robot extends Personnage {
 
-    public Robot(String name, int[] coordinate) {
+    Map m;
+    Mouvements move;
+
+    public Robot(String name, int[] coordinate,Map m) {
         super(name, coordinate);
+        this.m=m;
+        move=this.compare(this.getCoordinate().get(0), this.choix().get(0));
+        jouer(m);
     }
 
-    public Mouvements jouer(Map m){
-        Mouvements move=this.compare(this.getCoordinate().get(0), this.choix(m).get(0)); 
-        return move;
+    public String jouer(Map m){
+        if (this.move==Mouvements.HAUT){
+            return "U";
+        }else if(this.move==Mouvements.BAS){
+            return "D";
+        }else if(this.move==Mouvements.GAUCHE){
+            return "L";
+        }else if(this.move==Mouvements.DROITE){
+            return "R";
+        }
+        return "Problème";
     }
 
-    public boolean estPossible(int x,int y,Map m){
-        JOptionPane.showInputDialog((m.getGrid().length+"  "+ m.getGrid()[0].length).toString());
-        Object [][] grille=new Object[][] {m.getGrid()};
+    public boolean estPossible(int x,int y){
+        JOptionPane.showInputDialog((this.m.getGrid().length+"  "+ this.m.getGrid()[0].length).toString());
+        Object [][] grille=new Object[][] {this.m.getGrid()};
         if (grille[x][y]==Effects.IMPASSABLE){
             return false;
         }
@@ -33,33 +45,33 @@ public class Robot extends Personnage {
         return t;
     }
 
-    public ArrayList<int []> coupsPossibles(int [] co,Map m) {
+    public ArrayList<int []> coupsPossibles(int [] co) {
         ArrayList<int []> coupsValables=new ArrayList<int []> ();
-        if (this.estPossible(co[0]+1,co[1], m)){
+        if (this.estPossible(co[0]+1,co[1])){
             coupsValables.add(creerTab(co[0]+1, co[1]));
-        }else if (this.estPossible(co[0],co[1]+1, m)){
+        }else if (this.estPossible(co[0],co[1]+1)){
             coupsValables.add(creerTab(co[0], co[1]+1));
-        }else if (this.estPossible(co[0]-1,co[1], m)){
+        }else if (this.estPossible(co[0]-1,co[1])){
             coupsValables.add(creerTab(co[0]-1, co[1]));
-        }else if (this.estPossible(co[0],co[1]-1, m)){
+        }else if (this.estPossible(co[0],co[1]-1)){
             coupsValables.add(creerTab(co[0], co[1]-1));
         }
         return coupsValables;
     }
 
-    public ArrayList <int []> casesAutour(Map m){
-        ArrayList <int []> t =this.coupsPossibles(this.getCoordinate().get(0),m);
+    public ArrayList <int []> casesAutour(){
+        ArrayList <int []> t =this.coupsPossibles(this.getCoordinate().get(0));
         ArrayList <int []> t2 = new ArrayList<> ();
         for (int i=0;i<t.size();i++){
             t.get(i)[0]+=1;
-            this.fusion(t2,this.coupsPossibles(t.get(i), m));
+            this.fusion(t2,this.coupsPossibles(t.get(i)));
             t.get(i)[0]-=2;
-            this.fusion(t2,this.coupsPossibles(t.get(i), m));
+            this.fusion(t2,this.coupsPossibles(t.get(i)));
             t.get(i)[0]+=1;
             t.get(i)[1]+=1;
-            this.fusion(t2,this.coupsPossibles(t.get(i), m));
+            this.fusion(t2,this.coupsPossibles(t.get(i)));
             t.get(i)[1]-=2;
-            this.fusion(t2,this.coupsPossibles(t.get(i), m));
+            this.fusion(t2,this.coupsPossibles(t.get(i)));
         }
         this.killDouble(t2);
         return t2;
@@ -72,11 +84,11 @@ public class Robot extends Personnage {
         return t;
     }
 
-    public ArrayList <int []> choix(Map m){
-        ArrayList <int[]> cases=casesAutour(m);
+    public ArrayList <int []> choix(){
+        ArrayList <int[]> cases=casesAutour();
         ArrayList <ArrayList <int []>> w=new ArrayList<>();
         for (int i=0;i<cases.size();i++){
-            w.add(this.coupsPossibles(casesAutour(m).get(i),m));
+            w.add(this.coupsPossibles(casesAutour().get(i)));
         }
         ArrayList<int []> max=w.get(0);
         for (ArrayList <int []> e :w){
