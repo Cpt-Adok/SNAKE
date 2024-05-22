@@ -79,7 +79,8 @@ public class Personnage {
      */
     public boolean applyEffects(Effects effect) {
         switch (effect) {
-            case DECREASESIZE: this.coordinate.removeLast(); break;
+            case DECREASESIZE: 
+                if (this.coordinate.size() > 1) {this.coordinate.removeLast();} break;
             
             case VOID: break;
             case IMPASSABLE: return true;
