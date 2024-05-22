@@ -1,5 +1,6 @@
 import environnements.Map;
 import game.Terminal;
+import object.Items;
 import personnages.Personnage;
 import personnages.Player;
 import tests.*;
@@ -14,6 +15,7 @@ public class Main {
         };
 
         Map map = new Map(20, 20);
+        map.addObjectsRandomize(new Object[] {Items.FRAISE}, 2);
 
         new Terminal(map, personnages);
     }
