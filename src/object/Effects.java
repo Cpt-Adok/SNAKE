@@ -1,4 +1,4 @@
-package Objets;
+package object;
 
 /**
  * cette enumérateur {@link Effects} contient tout les effets 

@@ -1,11 +1,9 @@
-package Display;
+package display;
 
 import java.util.ArrayList;
 
-import Environnements.Map;
-import Objets.Items;
-import Personnages.Personnage;
-import Personnages.Snake;
+import object.*;
+import personnages.*;
 
 public class Display {
     /**
@@ -129,8 +127,8 @@ public class Display {
 
             if (isHead[0]) {System.out.print(" \u21E9 ");return;} 
             else if (isHead[1]) {System.out.print(" \u21E7 ");return;} 
-            else if (isHead[2]) {System.out.print("\u21E8  ");return;} 
-            else if (isHead[3]) {System.out.print("  \u21E6");return;} 
+            else if (isHead[2]) {System.out.print("  \u21E8");return;} 
+            else if (isHead[3]) {System.out.print("\u21E6  ");return;} 
         }
         }
         System.out.print(" \u25CF ");

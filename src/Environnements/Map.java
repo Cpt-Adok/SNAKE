@@ -1,12 +1,11 @@
-package Environnements;
+package environnements;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-import Objets.Effects;
-import Objets.Items;
-import Personnages.Personnage;
-import Personnages.Snake;
+import object.*;
+import personnages.*;
+
 
 /**
  * cette classe est la classe qui cree et genere 
@@ -75,7 +74,7 @@ public class Map {
     }
 
     public boolean isGameOver(int[] coordinate) {
-        return coordinate[0] < 0 || coordinate[0] >= this.grid[coordinate[1]].length || 
+        return coordinate[0] < 0 || coordinate[0] >= this.grid[0].length || 
                coordinate[1] < 0 || coordinate[1] >= this.grid.length;
     }
 
@@ -199,7 +198,8 @@ public class Map {
      */
     public void deleteItems(int[] coordinate) {
         for(int i = 0; i<this.coordinateItems.size(); i++) {
-            if (this.coordinateItems.get(i) == coordinate) {
+            int[] itemCoordinate = this.coordinateItems.get(i);
+            if (itemCoordinate[0] == coordinate[0] && itemCoordinate[1] == coordinate[1]) {
                 this.coordinateItems.remove(i);
                 this.ObjectItems.remove(i);
             }

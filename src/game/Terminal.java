@@ -1,14 +1,10 @@
-package Display;
+package game;
+
+import display.*;
+import personnages.*;
+import environnements.*;
 
 import java.util.Scanner;
-
-import Environnements.Map;
-import Objets.Effects;
-import Objets.Items;
-import Personnages.Mouvements;
-import Personnages.Personnage;
-import Personnages.Player;
-import Personnages.Robot;
 
 public class Terminal {
     private int round = 0;
@@ -74,11 +70,11 @@ public class Terminal {
      * @return
      */
     private static boolean playerRound(Player player) {
-        int input = getInput(player);
-        player.moveCoordinate(input);
+        player.moveCoordinate(getInput(player));
 
         int[] coordinate = player.getHeadCoordinate();
-        if(map.isGameOver(player.getHeadCoordinate()) || player.applyEffects(map.getEffect(coordinate))) return true;
+        if(map.isGameOver(coordinate) || player.applyEffects(map.getEffect(coordinate))) return true;
+        map.deleteItems(coordinate);
 
         player.increaseRound();
         return false;
@@ -121,7 +117,7 @@ public class Terminal {
         int i = 0;
 
         while(!isGameOver) {
-            for (i = 0; i<personnages.length; i++) {
+            for (i = 0;i<personnages.length; i++) {
                 Personnage personnage = personnages[i];
                 Display.clearTerminal();
 
@@ -137,6 +133,7 @@ public class Terminal {
                 if(!isGameOver) placePersonnages(personnages);
                 else break;
 
+                System.out.println(1);
                 map.clearMap();
             }
             this.round++;

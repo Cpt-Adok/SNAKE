@@ -1,6 +1,4 @@
-package Personnages;
-
-import Objets.Effects;
+package object;
 
 public enum Snake {
     HEAD("TETE", Effects.IMPASSABLE),

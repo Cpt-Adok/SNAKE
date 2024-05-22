@@ -1,4 +1,6 @@
-package Personnages;
+package personnages;
+
+import object.*;
 
 /**
  * la classe Player a comme classe parent {@link Personnage}

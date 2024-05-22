@@ -1,4 +1,4 @@
-package Objets;
+package object;
 
 public enum Items {
     WALL("WALL", Effects.IMPASSABLE),
