@@ -1,8 +1,8 @@
-package Personnages;
+package personnages;
 
 import java.util.ArrayList;
 
-import Objets.Effects;
+import object.*;
 
 /**
  * Cette classe est la primitive des classes
