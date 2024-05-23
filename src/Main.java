@@ -6,7 +6,7 @@ import personnages.*;
 import types.Item;
 
 public class Main {
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
         Personnage.n = 2;
 
         Map map = new Map(20, 20);
@@ -19,6 +19,6 @@ public class Main {
         // map.addObjects(Item.FRAISE, 0, 0);
         // map.addObjectsRandomize(new Item[] {Item.FRAISE}, 1);
 
-        new Terminal(map, personnages).run(new String(), new String());
+        new Terminal(map, personnages).run("channel129", "channel128");
     }
 }
