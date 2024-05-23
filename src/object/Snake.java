@@ -1,4 +1,4 @@
-package Objects;
+package object;
 
 public enum Snake {
     HEAD("TETE", Effects.IMPASSABLE),

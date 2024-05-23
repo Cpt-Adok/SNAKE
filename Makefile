@@ -1,6 +1,6 @@
 # Paramètres
 .PHONY: all clean run
-.SILENT: clean run 
+.SILENT: run clean
 
 # variables
 JAVAC = javac
@@ -14,7 +14,7 @@ LIB_DIR = lib
 JAR = $(LIB_DIR)/*
 
 # main
-all: clean $(MAIN_FILE) run clean 
+all: clean $(MAIN_FILE) run 
 
 $(MAIN_FILE) : $(BIN_DIR)/$(MAIN_FILE).class
 

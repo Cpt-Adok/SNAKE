@@ -1,11 +1,14 @@
-package Characters;
+package object;
+
+import java.io.Serializable;
 
 /**
  * Cet enumerateur prend en charge tout les mouvements possible
  * pour le serpent, il a uniquement la possibilité de se déplacer
  * grâce a {@link Mouvements} pour la classe Player et Robot.
  */
-public enum Mouvements {
+@SuppressWarnings("unused")
+public enum Mouvements implements Serializable {
     /**
      * HAUT prend comme coordonnée (0, -1) pour se déplacer. 
      * @param x = 0
@@ -48,7 +51,7 @@ public enum Mouvements {
      * @param coordinate prend principalement les coordonnées du 
      * personnage
      */
-    public void editCoordinate(int[] coordinate) {
+    public void updateCoordinate(int[] coordinate) {
         coordinate[0] += this.deltaX;
         coordinate[1] += this.deltaY;
     }

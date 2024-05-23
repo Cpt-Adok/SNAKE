@@ -1,63 +1,47 @@
 package Connexion;
 
-import java.util.ArrayList;
+import environnements.*;
+import object.Mouvements;
+import personnages.Personnage;
 
-import javax.swing.JOptionPane;
+public class Channel extends Personnage{
+    private Reseau reseau;
 
-import Environnement.*;
-import Characters.*;
-import display.TerminalChannel;
-
-public class Channel{
-    
-    Reseau reseau;
-    ArrayList<Personnage> personnages;
-    int numJoueur;
-    TerminalChannel term;
-    Map m;
-
-    public Channel(Reseau r, ArrayList<Personnage> p, int j,TerminalChannel term,Map m){
-        this.reseau=r;
-        this.personnages=p;
-        this.numJoueur=j;
-        this.term=term;
-        this.m=m;
+    public Channel(Object[][] map, String channel) {
+        super(new int [] {19,19});
+        reseau=new Reseau(channel);
     }
 
-    public String typePersonnage(int i){
-        if (i>=0 && i<personnages.size()){
-            Personnage p=personnages.get(i);
-            if (p instanceof Characters.Players){
-                return "J";
-            }
-            return "R";
+    public void envoyerMessage(String s) {
+        reseau.sendContent(s);
+    }
+
+    public String recupererMessage() {
+        return reseau.getLastedContent(); 
+    }
+
+    public Mouvements conversion(String s){
+        if (s.equals("U") || s.equals("u")){
+            return Mouvements.HAUT;
+        }else if (s.equals("D") || s.equals("d")){
+            return Mouvements.BAS;
+        }else if (s.equals("L") || s.equals("l")){
+            return Mouvements.GAUCHE;
+        }else if (s.equals("R") || s.equals("r")){
+            return Mouvements.DROITE;
         }
         return null;
     }
 
-    public void jeu(){
-        String j1=this.typePersonnage(0);
-        Players player=(Players) this.personnages.get(0);
-        while (term.run()){
-            if (term.round%2!=0){
-                term.playerRound(player);
-            }else{
-                reseau.sendContent(this.jouer(j1));
-            }
+    // @Override
+    public boolean round(Map map){
+        int [] coordinate=this.getHeadCoordinate();
+        this.moveSnake(conversion(recupererMessage()));
+        if (map.isGameOver(coordinate) || this.applyEffects(map.getEffect(coordinate))){
+            return true;
         }
-    }
-
-    public String jouer(String j){
-        if (j=="J"){
-            Players player=(Players) this.personnages.get(0);
-            return this.getInput(reseau);
-        }
-        Robot bot=(Robot) this.personnages.get(0);
-        return bot.jouer(m);
-    }
-
-    public String getInput(Reseau r){
-        String c=" ";
-        return c;
+        map.deleteItems(coordinate);
+        this.increaseRound();
+        return false;
     }
 }
