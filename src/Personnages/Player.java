@@ -2,6 +2,7 @@ package personnages;
 
 import java.util.Scanner;
 
+import connexion.Channel;
 import environnements.Map;
 import types.*;
 
@@ -81,10 +82,12 @@ public class Player extends Personnage {
     }
 
     @Override
-    public boolean round(Map map) {
-        this.moveCoordinate(this.getInput());
+    public boolean round(Map map, String channel) {
+        int keys = this.getInput();
+        this.moveCoordinate(keys);
 
         int[] coordinate = this.getHeadCoordinate();
+        if (channel != null) Channel.envoyerMessage(getMouvement(keys));
         if(map.isGameOver(coordinate) || this.applyEffects(map.getEffect(coordinate))) return true;
         map.deleteItems(coordinate);
 

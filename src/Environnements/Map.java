@@ -102,12 +102,11 @@ public class Map {
     public Grid[][] getInverseGrid() {
         Grid[][] grid = getGrid();
         Grid[][] inverseGrid = new Grid[this.largeur][this.longueur];
-        int k = 0; 
-
-        for (int i = grid.length; i> 0; --i) {
-            inverseGrid[k++] = inverseGrid[i];
+        
+        for (int i = grid.length - 1; i >= 0; i--) {
+            inverseGrid[i] = grid[grid.length - 1 - i];
         }
-
+    
         return inverseGrid;
     }
 

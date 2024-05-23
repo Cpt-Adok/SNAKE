@@ -175,5 +175,5 @@ public abstract class Personnage {
         if(round > 0 && n > 0) if (round%n == 0) this.coordinate.add(coordinate);
     }
 
-    public abstract boolean round(Map map);
+    public abstract boolean round(Map map, String channel);
 }
