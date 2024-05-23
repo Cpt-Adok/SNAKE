@@ -1,14 +1,11 @@
-package object;
-
-import java.io.Serializable;
+package types;
 
 /**
  * Cet enumerateur prend en charge tout les mouvements possible
  * pour le serpent, il a uniquement la possibilité de se déplacer
- * grâce a {@link Mouvements} pour la classe Player et Robot.
+ * grâce a {@link Mouvement} pour la classe Player et Robot.
  */
-@SuppressWarnings("unused")
-public enum Mouvements implements Serializable {
+public enum Mouvement {
     /**
      * HAUT prend comme coordonnée (0, -1) pour se déplacer. 
      * @param x = 0
@@ -40,7 +37,7 @@ public enum Mouvements implements Serializable {
     private final int deltaX;
     private final int deltaY;
 
-    Mouvements(int deltaX, int deltaY) {
+    Mouvement(int deltaX, int deltaY) {
         this.deltaX = deltaX;
         this.deltaY = deltaY;
     }

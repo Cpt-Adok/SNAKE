@@ -3,7 +3,7 @@ package environnements;
 import java.util.ArrayList;
 import java.util.Random;
 
-import object.*;
+import types.*;
 import personnages.*;
 
 
@@ -16,17 +16,17 @@ public class Map {
      * cette variable est toute la grille où se 
      * passe tout le jeu.
      */
-    private Object grid[][];
+    private Grid grid[][];
 
     /**
-     * cette variable recupere tout les objects stockés,
+     * cette variable recupere tout les Grids stockés,
      * elle complete {@link #coordinateItems}.
      */
-    private ArrayList<Object> ObjectItems;
+    private ArrayList<Grid> GridItems;
     
     /**
      * cette variable recupere tout les coordonnées des
-     * objects stockés, elle complete {@link #ObjectItems}.
+     * Grids stockés, elle complete {@link #GridItems}.
      */
     private ArrayList<int[]> coordinateItems;
 
@@ -45,9 +45,9 @@ public class Map {
         this.longueur = longueur;
         this.largeur = largeur;
 
-        this.grid = new Object[this.largeur][this.longueur];
+        this.grid = new Grid[this.largeur][this.longueur];
         
-        this.ObjectItems = new ArrayList<>();
+        this.GridItems = new ArrayList<>();
         this.coordinateItems = new ArrayList<>();
 
         this.fillGrid();
@@ -61,7 +61,7 @@ public class Map {
     private void fillGrid() {
         for(int i = 0; i < this.grid.length; i++) {
             for(int k = 0; k < this.grid[0].length; k++) {
-                this.grid[i][k] = Items.VOID;
+                this.grid[i][k] = Item.VOID;
             }
         }
     }
@@ -69,7 +69,7 @@ public class Map {
     /**
      * renvoie la grille du jeu.
      */
-    public Object[][] getGrid() {
+    public Grid[][] getGrid() {
         return grid.clone();
     }
 
@@ -83,9 +83,9 @@ public class Map {
      * @param coordinate
      * @return un {@link Effects}
      */
-    public Effects getEffect(int[] coordinate) {
-        Object object = this.grid[coordinate[1]][coordinate[0]];
-        return (object instanceof Items) ? ((Items)object).getEffects() : ((Snake)object).getEffects();
+    public Effect getEffect(int[] coordinate) {
+        Grid gridCoordinate = this.grid[coordinate[1]][coordinate[0]];
+        return gridCoordinate.get();
     }
 
     /**
@@ -96,12 +96,12 @@ public class Map {
     }
 
     /**
-     * inverse toute la grille pour soit mettre 0, 0 en bas
+     * inverse toute la grille pour soit mettre (0, 0) en bas
      * ou en haut.
      */
-    public Object[][] getInverseGrid() {
-        Object[][] grid = getGrid();
-        Object[][] inverseGrid = new Object[this.largeur][this.longueur];
+    public Grid[][] getInverseGrid() {
+        Grid[][] grid = getGrid();
+        Grid[][] inverseGrid = new Grid[this.largeur][this.longueur];
         int k = 0; 
 
         for (int i = grid.length; i> 0; --i) {
@@ -113,35 +113,34 @@ public class Map {
 
     /**
      * ajoute les coordonnées et les objets de façon non aléatoire
-     * @param object
+     * @param Grid
      * @param x
      * @param y
      */
-    public void addObjects(Object object, int x, int y) {
+    public void addObjects(Grid Grid, int x, int y) {
         this.coordinateItems.add(new int[]{x, y});
-        this.ObjectItems.add(object);
+        this.GridItems.add(Grid);
     }
 
     /**
      * cette fonction ajoute dans {@link #grid} les
-     * objects contenu dans {@link #coordinateItems}
-     * et {@link #ObjectItems}.
-     * @param objects prend le type d'objets que vous voulez
+     * Grids contenu dans {@link #coordinateItems}
+     * et {@link #GridItems}.
+     * @param Grids prend le type d'objets que vous voulez
      * mettre dedans.
      * @param number prend le nombre d'objets global que 
      * vous voulez mettre dedans.
      */
-    public void addObjectsRandomize(Object[] objects, int number) {
-        int lengthObjects = objects.length-1;
+    public void addObjectsRandomize(Item[] item, int number) {
+        int lengthGrids = item.length-1;
         Random random = new Random();
 
-        for(int i = 0; i<lengthObjects; i++) {
+        for(int i = 0; i<lengthGrids; i++) {
             int value = random.nextInt(number);
             number -=  value;
-            randomize(objects[i], value);
+            randomize(item[i], value);
         }
-        randomize(objects[lengthObjects], number);
-        placeObjects();
+        randomize(item[lengthGrids], number);
     }
 
     /**
@@ -153,10 +152,10 @@ public class Map {
 
         for (int[] coordinate : personnage.getCoordinate()) {
             if (index == 0) {
-                this.grid[coordinate[1]][coordinate[0]] = Snake.HEAD;
+                this.grid[coordinate[1]][coordinate[0]] = SnakePart.HEAD;
                 
             } else {
-                this.grid[coordinate[1]][coordinate[0]] = Snake.BODY;
+                this.grid[coordinate[1]][coordinate[0]] = SnakePart.BODY;
             }
             index++;
         }
@@ -171,14 +170,14 @@ public class Map {
      * de 1 dedans donc (1, 1) dans grid = (2, 2) dans edgesGrid
      * @return la liste avec les murs. 
      */
-    public Object[][] addEdges() {
-        Object[][] grid = this.getGrid();
-        Object[][] edgesGrid = new Object[this.largeur+2][this.longueur+2];
+    public Grid[][] addEdges() {
+        Grid[][] grid = this.getGrid();
+        Grid[][] edgesGrid = new Grid[this.largeur+2][this.longueur+2];
 
         for(int i = 0; i < edgesGrid.length; i++) {
             for(int k = 0; k < edgesGrid[0].length; k++) {
                 if (i == 0 || i == edgesGrid.length - 1 || k == 0 || k == edgesGrid[0].length - 1) {
-                    edgesGrid[i][k] = Items.WALL;
+                    edgesGrid[i][k] = Item.WALL;
                 } else {
                     edgesGrid[i][k] = grid[i-1][k-1];
                 }
@@ -201,7 +200,7 @@ public class Map {
             int[] itemCoordinate = this.coordinateItems.get(i);
             if (itemCoordinate[0] == coordinate[0] && itemCoordinate[1] == coordinate[1]) {
                 this.coordinateItems.remove(i);
-                this.ObjectItems.remove(i);
+                this.GridItems.remove(i);
             }
         }
     }
@@ -214,7 +213,7 @@ public class Map {
         for(int i = 0; i<this.coordinateItems.size(); i++) {
             int[] coordinate = this.coordinateItems.get(i);
 
-            this.grid[coordinate[1]][coordinate[0]] = ObjectItems.get(i);
+            this.grid[coordinate[1]][coordinate[0]] = GridItems.get(i);
         }
     }
 
@@ -222,21 +221,19 @@ public class Map {
      * prend des coordonnées au hasard et regarde si c'est 
      * pas deja occupé par un item ou un corps sinon, il 
      * recommence.
-     * @param object
+     * @param Grid
      * @param number
      */
-    private void randomize(Object object, int number) {
+    private void randomize(Item Grid, int number) {
         Random random = new Random();
 
         for (int i = 0; i<number; i++) {
             int x = random.nextInt(this.grid[0].length);
             int y = random.nextInt(this.grid.length);
 
-            if(!(this.grid[y][x] instanceof Snake) && (Items)this.grid[y][x] == Items.VOID) {
-                this.coordinateItems.add(new int[] {x, y});
-                this.ObjectItems.add(object);
-            } 
-            else {
+            if(this.grid[y][x] == Item.VOID) {
+                this.addObjects(Grid, x, y);
+            } else {
                 i--;
             }
         }

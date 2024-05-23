@@ -1,23 +1,23 @@
-package object;
+package types;
 
 /**
  * cette enumérateur {@link Effects} contient tout les effets 
  * necessaire pour le bon déroulement du jeu et quelque effets
  * amusant qui pousse un peu plus les mecaniques du jeu.
  */
-public enum Effects {
+public enum Effect {
     /**
-     * reduis le corps de 1.
+     * Effet : Réduit la taille du serpent de 1 segment.
      */
     DECREASESIZE,
     
     /**
-     * tue le joueur si contact.
+     * Effet : Intransposable, entraînant la mort du joueur lors du contact.
      */
     IMPASSABLE, 
 
     /**
-     * le vide.
+     * Effet : Vide, aucun effet.
      */
-    VOID;
+    VOID;    
 }

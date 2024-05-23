@@ -1,6 +1,9 @@
 package personnages;
 
-import object.*;
+import java.util.Scanner;
+
+import environnements.Map;
+import types.*;
 
 /**
  * la classe Player a comme classe parent {@link Personnage}
@@ -25,7 +28,7 @@ public class Player extends Personnage {
     }
 
     public boolean moveCoordinate(int keys) {
-        Mouvements value = getMouvement(keys);
+        Mouvement value = getMouvement(keys);
         
         if (value != null) {
             moveSnake(value);
@@ -34,14 +37,58 @@ public class Player extends Personnage {
         return false;
     }
 
-    public Mouvements getMouvement(Integer keys) {
+    public Mouvement getMouvement(Integer keys) {
         switch (keys) {
-            case 0x77: case 0x7A:      return Mouvements.HAUT;    // w ou z
-            case 0x73:                 return Mouvements.BAS;     // s
-            case 0x61: case 0x71:      return Mouvements.GAUCHE;  // a ou q
-            case 0x64:                 return Mouvements.DROITE;  // d
+            case 0x77: case 0x7A:      return Mouvement.HAUT;    // w ou z
+            case 0x73:                 return Mouvement.BAS;     // s
+            case 0x61: case 0x71:      return Mouvement.GAUCHE;  // a ou q
+            case 0x64:                 return Mouvement.DROITE;  // d
             case null:                 return null;
             default:                   return null;
         }
     }
-}
+
+    /**
+     * transforme le String en prennant le premier char et 
+     * le mets en ascii dans la classe Integer.
+     * @param input
+     * @return
+     */
+    private Integer changeCoordinate(String input) {
+        if (input.length() > 0) {
+            return (int)input.charAt(0);
+        }
+        return null;
+    }
+
+    /**
+     * Cette fonction est uniquement destiné pour la classe
+     * Players pour recuperer l'input dans le terminal.
+     * @param player
+     * @return il retourne int qui est le char en ascii
+     */
+    @SuppressWarnings("resource")
+    private int getInput() {
+        Scanner scanner = new Scanner(System.in);
+        Integer input = null;
+
+        while(this.getMouvement(input) == null) {
+            input = this.changeCoordinate(scanner.nextLine());
+        }
+
+        // scanner.close();
+        return input.intValue();
+    }
+
+    @Override
+    public boolean round(Map map) {
+        this.moveCoordinate(this.getInput());
+
+        int[] coordinate = this.getHeadCoordinate();
+        if(map.isGameOver(coordinate) || this.applyEffects(map.getEffect(coordinate))) return true;
+        map.deleteItems(coordinate);
+
+        this.increaseRound();
+        return false;
+    }
+}   
