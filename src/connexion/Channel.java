@@ -10,31 +10,20 @@ import personnages.Personnage;
 public class Channel extends Personnage {
     private Reseau reseau;
     private static Reseau adversaire;
+    private String channel;
 
     private Map map;
 
     public Channel(Map map, String channel, String autreChannel) {
-        super(new int [] {map.getGrid()[0].length, map.getGrid().length});
+        super(new int [] {map.getGrid()[0].length - 1, map.getGrid().length - 1});
 
         this.map = map;
         this.name = autreChannel;
 
+        this.channel = channel;
+
         reseau = new Reseau(channel);
         adversaire = new Reseau(autreChannel);
-    }
-
-
-    public Grid[][] getInverseGridChannel() {
-        Grid[][] grid = map.getInverseGrid();
-        Grid[][] inverseGrid = new Grid[grid.length][grid[0].length];
-    
-        for (int j = grid.length - 1; j >= 0; j--) {
-            for (int i = grid[j].length - 1; i >= 0; i--) {
-                inverseGrid[j][i] = grid[j][grid[j].length - 1 - i];
-            }
-        }
-    
-        return inverseGrid;
     }
 
     /**
@@ -59,27 +48,30 @@ public class Channel extends Personnage {
      * @return Mouvement
      */
     public Mouvement conversionMouvement(String s){
-        if (s.equals("U") || s.equals("u")){
-            return Mouvement.HAUT;
-        }else if (s.equals("D") || s.equals("d")){
-            return Mouvement.BAS;
-        }else if (s.equals("L") || s.equals("l")){
-            return Mouvement.GAUCHE;
-        }else if (s.equals("R") || s.equals("r")){
-            return Mouvement.DROITE;
+        if (s != null) {
+            if (s.equals("U") || s.equals("u")){
+                return Mouvement.HAUT;
+            }else if (s.equals("D") || s.equals("d")){
+                return Mouvement.BAS;
+            }else if (s.equals("L") || s.equals("l")){
+                return Mouvement.GAUCHE;
+            }else if (s.equals("R") || s.equals("r")){
+                return Mouvement.DROITE;
+            }
         }
+
         return null;
     } 
 
     private static String conversionString(Mouvement mouvement){
         if (mouvement == Mouvement.HAUT) {
-            return "U";
-        } else if (mouvement == Mouvement.BAS) {
             return "D";
+        } else if (mouvement == Mouvement.BAS) {
+            return "U";
         } else if (mouvement == Mouvement.GAUCHE) {
-            return "L";
-        } else if (mouvement == Mouvement.DROITE) {
             return "R";
+        } else if (mouvement == Mouvement.DROITE) {
+            return "L";
         }
         return null;
     }
@@ -93,10 +85,13 @@ public class Channel extends Personnage {
      */
     @Override
     public boolean round(Map map, String channel){
-        int[] coordinate=this.getHeadCoordinate();
+        Mouvement mouvement;
 
-        this.moveSnake(conversionMouvement(recupererMessage()));
-        
+        System.out.println("Attente de l'autre joueur.");
+        while ((mouvement = conversionMouvement(recupererMessage())) == null) reseau.reconnexion(this.channel);
+        this.moveSnake(mouvement);
+
+        int[] coordinate=this.getHeadCoordinate();
         if (map.isGameOver(coordinate) || this.applyEffects(map.getEffect(coordinate))){
             return true;
         }
