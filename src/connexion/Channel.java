@@ -88,7 +88,12 @@ public class Channel extends Personnage {
         Mouvement mouvement;
 
         System.out.println("Attente de l'autre joueur.");
-        while ((mouvement = conversionMouvement(recupererMessage())) == null) reseau.reconnexion(this.channel);
+        while ((mouvement = conversionMouvement(recupererMessage())) == null) {
+            reseau.reconnexion(this.channel); 
+            try { Thread.sleep(500);
+            } catch (InterruptedException e) { e.printStackTrace(); }
+        }
+
         this.moveSnake(mouvement);
 
         int[] coordinate=this.getHeadCoordinate();
