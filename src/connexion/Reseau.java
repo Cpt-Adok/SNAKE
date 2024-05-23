@@ -42,6 +42,7 @@ import static java.util.Arrays.copyOfRange;
     */
     public Reseau(String channel) {
         this.CHANNEL = channel;
+
         this.wordArrayList = new ArrayList<String>();
         this.newerWordArrayList = new ArrayList<String>();
 
@@ -112,10 +113,17 @@ import static java.util.Arrays.copyOfRange;
      * @return il renvoie le {@link ArrayList} de la liste
      */
     public ArrayList<String> searchContentSorted() {
-        ArrayList<String> localNewerArrayList = this.searchContent();
-        if (this.getArrayContent().isEmpty()) this.addContentToContent(localNewerArrayList);
-        else this.searchDuplicates(localNewerArrayList);
-        return this.wordArrayList;
+        ArrayList<String> notsorted;
+
+        if ((notsorted = this.searchContent()) != null) {
+            ArrayList<String> localNewerArrayList = new ArrayList<>(notsorted);
+
+            if (this.getArrayContent().isEmpty()) this.addContentTonewerArrayList(localNewerArrayList);
+            else this.searchDuplicates(localNewerArrayList);
+            return this.wordArrayList;
+        }
+
+        return null;
     }
 
     /**
@@ -129,7 +137,7 @@ import static java.util.Arrays.copyOfRange;
     */
     public ArrayList<String> searchArrayListNotSorted() {
         ArrayList<String> localNewerArrayList = this.searchContent();
-        this.addContentToContent(localNewerArrayList);
+        this.addContentTonewerArrayList(localNewerArrayList);
         return this.wordArrayList;
     }
 
@@ -193,7 +201,7 @@ import static java.util.Arrays.copyOfRange;
         }
     }
 
-    private void addContentToContent(ArrayList<String> localArrayList) {
+    private void addContentTonewerArrayList(ArrayList<String> localArrayList) {
         int arrayListLength = this.getArrayContent().size();
 
         this.newerWordArrayList.clear();
