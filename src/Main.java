@@ -1,9 +1,7 @@
-import environnements.Map;
+import environnements.*;
 import game.Terminal;
-import object.Items;
-import personnages.Personnage;
-import personnages.Player;
-import tests.*;
+import personnages.*;
+import types.Item;
 
 public class Main {
     public static void main(String[] args) {
@@ -15,8 +13,9 @@ public class Main {
         };
 
         Map map = new Map(20, 20);
-        map.addObjectsRandomize(new Object[] {Items.FRAISE}, 2);
+        // map.addObjects(Item.FRAISE, 0, 0);
+        // map.addObjectsRandomize(new Item[] {Item.FRAISE}, 1);
 
-        new Terminal(map, personnages);
+        new Terminal(map, personnages).run();
     }
 }

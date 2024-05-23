@@ -2,7 +2,8 @@ package personnages;
 
 import java.util.ArrayList;
 
-import object.*;
+import environnements.*;
+import types.*;
 
 /**
  * Cette classe est la primitive des classes
@@ -10,7 +11,7 @@ import object.*;
  * tout le necessaire pour tout les personnages
  * jouable du jeu.
  */
-public class Personnage {
+public abstract class Personnage {
     /**
      * cette variable contient la valeur dans laquelle on sait 
      * quand le corps du snake grandi. il est le même pour tout
@@ -77,7 +78,7 @@ public class Personnage {
      *      retourner false
      * </code></pre>
      */
-    public boolean applyEffects(Effects effect) {
+    public boolean applyEffects(Effect effect) {
         switch (effect) {
             case DECREASESIZE: 
                 if (this.coordinate.size() > 1) {this.coordinate.removeLast();} break;
@@ -155,7 +156,7 @@ public class Personnage {
      * @param mouvement est le mouvement du personnage, comme HAUT, BAS,
      * GAUCHE et DROITE.
      */
-    public void moveSnake(Mouvements mouvement) {
+    public void moveSnake(Mouvement mouvement) {
         int[] latestCoordinate = getLatestCoordinate();
 
         for (int i = this.coordinate.size() - 1; i > 0; i--) {
@@ -173,4 +174,6 @@ public class Personnage {
     private void increaseSnake(int[] coordinate) {
         if(round > 0 && n > 0) if (round%n == 0) this.coordinate.add(coordinate);
     }
+
+    public abstract boolean round(Map map);
 }
