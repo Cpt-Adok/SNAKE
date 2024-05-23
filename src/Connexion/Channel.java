@@ -12,14 +12,28 @@ public class Channel extends Personnage{
         reseau=new Reseau(channel);
     }
 
+
+    /**
+     * Méthode permettant l'envoi de message, grâce à celle de Réseau
+     * @param String contenant la direction voulue
+     **/
     public void envoyerMessage(String s) {
         reseau.sendContent(s);
     }
 
+    /**
+     * Méthode permettant la réception du dernier message envoyé, grâce à celle de Réseau
+     **/
     public String recupererMessage() {
         return reseau.getLastedContent(); 
     }
 
+    /**
+     * Méthode permettant de convertir un String en Mouvement
+     * (Le String est celui récupéré dans le channel)
+     * @param String s
+     * @return Mouvement
+     */
     public Mouvements conversion(String s){
         if (s.equals("U") || s.equals("u")){
             return Mouvements.HAUT;
@@ -33,6 +47,14 @@ public class Channel extends Personnage{
         return null;
     }
 
+
+    /**
+     * Cette méthode est commune à toutes les sous-classes de personnages
+     * Elle permet de jouer. Ici, on bouge le personnage en fonction du String
+     * reçu dans le Channel, converti en Mouvement.
+     * @param map
+     * @return boolean qui indique si le Personnage est vivant ou pas.
+     */
     // @Override
     public boolean round(Map map){
         int [] coordinate=this.getHeadCoordinate();
