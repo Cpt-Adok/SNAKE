@@ -19,7 +19,7 @@ public class Terminal {
         this.map = map;
     }
 
-    public void run() {
+    public void run(String channel) {
         int i = 0;
 
         while(true) {
@@ -32,7 +32,7 @@ public class Terminal {
                 Display.printInformation(i++, personnage);
                 Display.printMap(map.addEdges());
                 
-                if(personnage.round(map)) {
+                if(personnage.round(map, channel)) {
                     Display.clearTerminal();
                     System.out.println(personnage.getName() + " à perdu!");
                     return;

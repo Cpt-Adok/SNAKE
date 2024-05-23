@@ -1,24 +1,48 @@
 package connexion;
 
+import java.util.Arrays;
+
 import environnements.*;
+import types.Item;
 import types.Mouvement;
 import personnages.Personnage;
 
 public class Channel extends Personnage {
     private Reseau reseau;
+    private static Reseau adversaire;
 
-    public Channel(Object[][] map, String channel) {
-        super(new int [] {19,19});
-        reseau=new Reseau(channel);
+    private Map map;
+
+    public Channel(Map map, String channel, String autreChannel) {
+        super(new int [] {map.getGrid()[0].length, map.getGrid().length});
+
+        this.map = map;
+        this.name = autreChannel;
+
+        reseau = new Reseau(channel);
+        adversaire = new Reseau(autreChannel);
     }
 
+
+    public Grid[][] getInverseGridChannel() {
+        Grid[][] grid = map.getInverseGrid();
+        Grid[][] inverseGrid = new Grid[grid.length][grid[0].length];
+    
+        for (int j = grid.length - 1; j >= 0; j--) {
+            for (int i = grid[j].length - 1; i >= 0; i--) {
+                inverseGrid[j][i] = grid[j][grid[j].length - 1 - i];
+            }
+        }
+    
+        return inverseGrid;
+    }
 
     /**
      * Méthode permettant l'envoi de message, grâce à celle de Réseau
      * @param String contenant la direction voulue
      **/
-    public void envoyerMessage(String s) {
-        reseau.sendContent(s);
+    public static void envoyerMessage(Mouvement mouvement) {
+        adversaire.sendContent(conversionString(mouvement));
     }
 
     /**
@@ -34,7 +58,7 @@ public class Channel extends Personnage {
      * @param String s
      * @return Mouvement
      */
-    public Mouvement conversion(String s){
+    public Mouvement conversionMouvement(String s){
         if (s.equals("U") || s.equals("u")){
             return Mouvement.HAUT;
         }else if (s.equals("D") || s.equals("d")){
@@ -45,8 +69,20 @@ public class Channel extends Personnage {
             return Mouvement.DROITE;
         }
         return null;
-    }
+    } 
 
+    private static String conversionString(Mouvement mouvement){
+        if (mouvement == Mouvement.HAUT) {
+            return "U";
+        } else if (mouvement == Mouvement.BAS) {
+            return "D";
+        } else if (mouvement == Mouvement.GAUCHE) {
+            return "L";
+        } else if (mouvement == Mouvement.DROITE) {
+            return "R";
+        }
+        return null;
+    }
 
     /**
      * Cette méthode est commune à toutes les sous-classes de personnages
@@ -55,13 +91,16 @@ public class Channel extends Personnage {
      * @param map
      * @return boolean qui indique si le Personnage est vivant ou pas.
      */
-    // @Override
-    public boolean round(Map map){
-        int [] coordinate=this.getHeadCoordinate();
-        this.moveSnake(conversion(recupererMessage()));
+    @Override
+    public boolean round(Map map, String channel){
+        int[] coordinate=this.getHeadCoordinate();
+
+        this.moveSnake(conversionMouvement(recupererMessage()));
+        
         if (map.isGameOver(coordinate) || this.applyEffects(map.getEffect(coordinate))){
             return true;
         }
+
         map.deleteItems(coordinate);
         this.increaseRound();
         return false;
