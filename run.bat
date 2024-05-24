@@ -5,7 +5,7 @@ set "error_file=error.txt"
 REM ceci est pour mettre un batch en utf-8 car sinon, nous aurons des problèmes avec les caractères.
 chcp 65001 
 
-make 2> %error_file%
+make channel=%1 adversaire=%2 2> %error_file%
 
 for %%A in ("%error_file%") do set "errror_size=%%~zA"
 

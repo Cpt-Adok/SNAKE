@@ -13,6 +13,10 @@ LIB_DIR = lib
 
 JAR = $(LIB_DIR)/*
 
+#Arguments pour java
+channel = $(arg1)
+adversaire = $(arg2)
+
 # main
 all: clean $(MAIN_FILE) run 
 
@@ -23,7 +27,7 @@ $(BIN_DIR)/$(MAIN_FILE).class : $(SRC_DIR)/$(MAIN_FILE).java
 	$(JAVAC) -d $(BIN_DIR) -sourcepath $(SRC_DIR) -classpath $(JAR) $<
 
 run:
-	java -cp $(BIN_DIR) $(MAIN_FILE)
+	java -cp $(BIN_DIR) $(MAIN_FILE) $(channel) $(adversaire)
 
 clean:
 	@rm -rf $(BIN_DIR)
