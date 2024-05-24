@@ -37,6 +37,7 @@ public class Map {
      * le constructeur crée une grille "vide" qui
      * contient uniquement l'enumerateur Items.VOID 
      * avec la longueur et la largeur en paramètre.
+     * <pre><code>grid[largueur][longueur]</code></pre>
      * 
      * @param longueur pour la grille du jeu
      * @param largeur pour la grille du jeu
@@ -51,6 +52,14 @@ public class Map {
         this.coordinateItems = new ArrayList<>();
 
         this.fillGrid();
+    }
+
+    public void replaceGrid(Grid[][] grid) {
+        if (this.grid.length == grid.length && this.grid[0].length == grid[0].length) {
+            for (int i = 0; i<this.grid.length; i++) {
+                this.grid[i] = grid[i].clone();
+            }
+        }
     }
 
     /**
