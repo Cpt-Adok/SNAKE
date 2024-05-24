@@ -1,3 +1,4 @@
+import display.Display;
 import environnements.*;
 import game.Terminal;
 import personnages.*;
@@ -18,10 +19,13 @@ public class Main {
                 new Player(new int[] {grid[0].length - 1, grid.length - 1}, "Luke Skywalker")
             };
 
-            map.addObjects(Item.FRAISE, 3, 5);
-            map.addObjectsRandomize(new Item[] {Item.FRAISE, Item.WALL}, 3);
+            map.addObjects(Item.WALL, 19, 7);
+            map.addObjects(Item.WALL, 19, 6);
+            map.placeObjects();
+            Display.printMap(map.addEdges());
+            Display.printMapName(grid);
 
-            new Terminal(map, personnages).run();
+            // new Terminal(map, personnages).run();
         } 
         // lancer en ligne
         else {

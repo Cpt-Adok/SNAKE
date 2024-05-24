@@ -1,5 +1,7 @@
 package display;
 
+import java.util.Arrays;
+
 import environnements.Grid;
 import personnages.Personnage;
 import types.Item;
@@ -51,8 +53,13 @@ public class Display {
             (x < map[y].length - 1) ? map[y][x + 1] == Item.WALL : false,
         };
 
+        // System.out.println(Arrays.toString(position));
+
         for(Wall value : Wall.values()) {
-            if(value.isEqual(position)) map[y][x].updateStringCode(value.getAscii());
+            if(value.isEqual(position))  {
+                map[y][x].updateStringCode(value.getAscii());
+                break;
+            }
         }
     }
 

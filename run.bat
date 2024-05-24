@@ -15,5 +15,5 @@ if %errror_size% gtr 0 (
 
 del /Q %error_file%
 
-pause > null
+pause
 exit

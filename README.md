@@ -38,8 +38,9 @@ Pour lancer le jeu en multijoueur avec Makefile (mot1 et mot2 sont des mots à c
 - `Make channel=mot1 adversaire=mot2` : compile tout le programme et le lance en multijoueur.
 - `Make run channel=mot1 adversaire=mot2` : lance uniquement le programme en multijoueur.
 
-Sur windows, vous avez une autre option que personnellement je vous encourage, c'est l'utilisation du `run.bat`. Ce programme va lancer 
+Sur windows, vous avez une autre option que personnellement je vous encourage, c'est l'utilisation du `run.bat`. Ce programme va lancer le Makefile mais aussi le faite de mettre l'utf-8 sur la session. Si vous utilisez pas le `run.bat`, vous aurez possiblement certains problèmes avec certains caractères qui seront remplacés par des "?", pour lancer le programme run.bat (mot1 et mot2 sont des mots à changer en fonction du canal):
 
+- `run.bat mot1 mot2` : il va uniquement lancer `Make channel=mot1 adversaire=mot2` et en même temps lancer `chcp 65001` qui va mettre l'utf-8.
 # IA (Q-Learning)
 
 ## - Explications
