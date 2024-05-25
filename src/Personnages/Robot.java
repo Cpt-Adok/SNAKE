@@ -17,15 +17,16 @@ public class Robot extends Personnage {
         super(coordinate);
         this.name = name;
         this.m=m;
-        move=this.compare(this.getHeadCoordinate(), this.choix().get(0));
     }
 
 
     @Override
     public boolean round(Map map, String channel){
-        System.out.println("Est-ce que ça passe par là au moins ?");
+        System.out.println(this.choix().size()+ " move : "+this.compare(this.getHeadCoordinate(), this.choix().get(0)));
+        this.move=this.compare(this.getHeadCoordinate(), this.choix().get(0));
+
         int[] coordinate = this.getHeadCoordinate();
-        if (channel != null) Channel.envoyerMessage(this.getMove());
+        if (channel != null) Channel.envoyerMessage(this.move);
 
         if(map.isGameOver(coordinate) || this.applyEffects(map.getEffect(coordinate))) return true;
 
@@ -43,13 +44,15 @@ public class Robot extends Personnage {
 
     public boolean estPossible(int x,int y){
         Object [][] grille=this.m.getGrid();
-        //System.out.println(x+" <= x , length grille : "+(grille.length-1)+" "+y+"<= y , length grille [0] : "+(grille[0].length-1));
-        if (x>grille.length-1 || y>grille[0].length-1){
-            return false;
-        } else if (grille[x][y]==Effect.IMPASSABLE){
-            return false;
+        if (x>=0 && x<grille.length && y>=0 && y<grille[0].length){
+            if (grille[x][y]!=Effect.IMPASSABLE){
+                System.out.println("Ca passe");
+                return true;
+            }
+            System.out.println("Ca passe que le premier if");
         }
-        return true;
+        System.out.println("Ca passe rien");
+        return false;
     }
 
     public int [] creerTab(int x,int y){
@@ -71,24 +74,6 @@ public class Robot extends Personnage {
         return coupsValables;
     }
 
-    public ArrayList <int []> casesAutour(){
-        ArrayList <int []> t =this.coupsPossibles(this.getCoordinate().get(0));
-        ArrayList <int []> t2 = new ArrayList<> ();
-        for (int i=0;i<t.size();i++){
-            t.get(i)[0]+=1;
-            this.fusion(t2,this.coupsPossibles(t.get(i)));
-            t.get(i)[0]-=2;
-            this.fusion(t2,this.coupsPossibles(t.get(i)));
-            t.get(i)[0]+=1;
-            t.get(i)[1]+=1;
-            this.fusion(t2,this.coupsPossibles(t.get(i)));
-            t.get(i)[1]-=2;
-            this.fusion(t2,this.coupsPossibles(t.get(i)));
-        }
-        this.killDouble(t2);
-        return t2;
-    }
-
     public ArrayList<int[]> fusion(ArrayList<int[]> t, ArrayList<int[]> t2){
         for (int [] e :t2){
             t.add(e);
@@ -97,27 +82,21 @@ public class Robot extends Personnage {
     }
 
     public ArrayList <int []> choix(){
-        ArrayList <int[]> cases=casesAutour();
-        ArrayList <ArrayList <int []>> w=new ArrayList<>();
-        for (int i=0;i<cases.size();i++){
-            w.add(this.coupsPossibles(casesAutour().get(i)));
-        }
-        ArrayList<int []> max=w.get(0);
-        for (ArrayList <int []> e :w){
-            if (e.size()>max.size()){
-                max=e;
-            }
-        }
-        if (w.size()==0){
+        Random r=new Random();
+        ArrayList <int[]> cases=coupsPossibles(this.getHeadCoordinate());
+        if (cases.size()==0){
             return this.suicide(cases);
         }
-        return max;
+        int [] choix=cases.get(r.nextInt(cases.size()));
+        ArrayList <int []> choisi =new ArrayList<int[]>();
+        choisi.add(choix);
+        return choisi;
     }
 
     public ArrayList <int []> suicide(ArrayList <int []> murs){
         Random r=new Random();
         ArrayList <int []> a=new ArrayList<> ();
-        a.add(murs.get(r.nextInt(murs.size())));
+        a.add(murs.get(r.nextInt(4)));
         return a;
     }
 
@@ -130,9 +109,8 @@ public class Robot extends Personnage {
             return Mouvement.GAUCHE;
         }else if (t[1]>t2[1]){
             return Mouvement.DROITE;
-        }else if (t[0]==t2[0] || t[1]==t2[1]){
-            return moveRandom();
         }
+        System.out.println("Problème Robot.compare");
         return null;
     }
 
@@ -141,18 +119,11 @@ public class Robot extends Personnage {
             for (int j=i;j<t.size();j++){
                 if (t.get(i)==t.get(j)){
                     t.remove(j);
-                }else if(t.get(i)==this.getCoordinate().get(0)){
+                }else if(t.get(i)==this.getHeadCoordinate()){
                     t.remove(i);
                 }
             }
         }
         return t;
-    }
-
-    public Mouvement moveRandom(){
-        System.out.println("Ce choix est parfaitement aléatoire");
-        Random r=new Random();
-        Mouvement [] m=new Mouvement[] {Mouvement.HAUT,Mouvement.BAS,Mouvement.GAUCHE,Mouvement.DROITE};
-        return m[r.nextInt(4)];
     }
 }
