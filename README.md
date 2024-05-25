@@ -106,7 +106,7 @@ Les choix qu'elle fait sont donc partiellement aléatoires et évitent essentiel
 
 # CRÉDITS
 
-Impressions FARIA Théo:
+#### Impressions FARIA Théo:
 
 Durant ce projet j'ai parfois été complètement perdu par certaines méthodes très avancées utilisées par mon camarade.
 Cependant, grâce à lui j'ai énormément appris et son aide m'a souvent été précieuse. Je lui suis très reconnaissant de sa patience et de sa volonté de m'inclure malgré tout. Il a réussi à me déléguer des taches plus simples et à m'expliquer ce que lui faisait.
