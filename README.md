@@ -42,6 +42,7 @@ Sur windows, vous avez une autre option que personnellement je vous encourage, c
 
 - `run.bat mot1 mot2` : il va uniquement lancer `Make channel=mot1 adversaire=mot2` et en même temps lancer `chcp 65001` qui va mettre l'utf-8.
 
+
 #RÉSEAU ET COMMUNICATION
 
 ##Réseau
@@ -54,7 +55,9 @@ Nous l'avons définie comme une sous-classe de Personnage.
 
 Pour communiquer, elle reprend essentiellement des méthodes de Réseau, comme sendContent ou getLastedContent. Son travail est donc en grande partie consacré à la conversion de ce qui est reçu et de ce qui va être envoyé.
 
-// J'en suis là
+Le channel récupère les données contenues sur le channel qui y est dédié (le sien) et les représente dans le jeu du joueur local après conversion. Quand c'est au tour de celui-ci de jouer, il envoie le coup sur le channel adversaire et le tranforme en direction lisible, pour que celui-ci puisse l'utiliser.
+
+Nous avons testé Channel à distance sur 2 machines et la partie s'est déroulée correctement.
 
 
 # IA (Q-Learning)
