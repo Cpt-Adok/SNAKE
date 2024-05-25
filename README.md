@@ -43,12 +43,12 @@ Sur windows, vous avez une autre option que personnellement je vous encourage, c
 - `run.bat mot1 mot2` : il va uniquement lancer `Make channel=mot1 adversaire=mot2` et en même temps lancer `chcp 65001` qui va mettre l'utf-8.
 
 
-#RÉSEAU ET COMMUNICATION
+# RÉSEAU ET COMMUNICATION
 
-##Réseau
+## Réseau
 
 
-##Channel
+## Channel
 
 Channel est le module d'échange entre la machine de l'utilisateur et son adversaire via le site Padiflac.
 Nous l'avons définie comme une sous-classe de Personnage.
