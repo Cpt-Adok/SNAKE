@@ -106,4 +106,11 @@ Les choix qu'elle fait sont donc partiellement aléatoires et évitent essentiel
 
 # CRÉDITS
 
-Ce projet à été réalisé par FARIA Théo et GUEZO Loïc.
+Impressions FARIA Théo:
+
+Durant ce projet j'ai parfois été complètement perdu par certaines méthodes très avancées utilisées par mon camarade.
+Cependant, grâce à lui j'ai énormément appris et son aide m'a souvent été précieuse. Je lui suis très reconnaissant de sa patience et de sa volonté de m'inclure malgré tout. Il a réussi à me déléguer des taches plus simples et à m'expliquer ce que lui faisait.
+
+Je trouve notre projet bien construit, utilisant des moyens adaptés à chacuns des points du jeu. La division des classes est pertinente et les commentaires apportent une grande plus-value à ceux qui voudrait l'utiliser.
+
+Ce projet à été réalisé par GUEZO Loïc et FARIA Théo.
