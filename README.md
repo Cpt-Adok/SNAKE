@@ -20,7 +20,7 @@ C'est un projet de fin de Licence L1 en Informatique à UPEC, la création d'un 
 
 - La partie **PROBLÈME ET SOLUTION RENCONTRÉES**
 
-### AVANT TOUT : Comment lancer le jeu.
+## AVANT TOUT : Comment lancer le jeu.
 
 Pour lancer le jeu, nous pouvons utiliser les addons de vscode en appuyant sur ***run*** sur la methode **main**.
 
@@ -43,12 +43,19 @@ Sur windows, vous avez une autre option que personnellement je vous encourage, c
 - `run.bat mot1 mot2` : il va uniquement lancer `Make channel=mot1 adversaire=mot2` et en même temps lancer `chcp 65001` qui va mettre l'utf-8.
 
 
+# JEU et GAMEPLAY
+
+Ce jeu est un 1vs1 snake tactique tour par tour avec une gestion de mur et de fruits (que l'on peut ajouter aléatoirement ou en le directement en le placant par x et y), nous pouvons se déplacer avec les touches **z q s d ou/et w a s d**, le jeu se termine quand l'un des 2 snake meurt soit en foncant dans un corps, soit par un mur.
+
+le programme pour le joueur recupère la touche envoyé et le transforme en ascii et une autre fonction le prend et le change en mouvement.
+
+![ASCII](res/ASCII-Table.svg)
+
+Nous pouvons changer quelque settings comme le nombre de tour avant que la taille du snake s'accumule en faisant `Personnage.n = n`.
+
 # RÉSEAU ET COMMUNICATION
 
-## Réseau
-
-
-## Channel
+## - Channel
 
 Channel est le module d'échange entre la machine de l'utilisateur et son adversaire via le site Padiflac.
 Nous l'avons définie comme une sous-classe de Personnage.
@@ -92,6 +99,12 @@ Ce calcul sera la valeur de toutes les actions que l'IA va enregistrer dans sa b
 - $\gamma$ : est l'importance des futures récompenses.
 - $\max(Q(s_{t+1}, a))$ : est la valeur maximale de Q du prochain tour parmi toute sa base de donnée.
 
+## Resultat : 
+
+![IA](res/video/ia_solo_15min_apprentissage.gif)
+
+Dans cette vidéo, l'ia s'est entrainé pendant 15min tout seul et il a trouvé le meilleur chemin selon lui jusqu'à sa derniere erreur sur son apprentissage.
+si je l'apprennais encore un peu plus, il pourra rester le plus longtemps possible.
 
 # IA (sans Q-Learning)
 
@@ -103,14 +116,23 @@ Quand elle est coincée et qu'aucune des cases l'entourant n'est un choix possib
 
 Les choix qu'elle fait sont donc partiellement aléatoires et évitent essentiellement une mort au coup suivant.
 
+# GRAPHIQUE 
 
-# CRÉDITS
+Nous avons utiliser le terminal pour faire notre parti graphique avec de l'utf-8, il est très important d'activer l'utf-8 sur les terminaux avant de lancer le jeu car vous pourrez avoir des problèmes comme des "?".
 
-#### Impressions FARIA Théo:
+# PROBLÈME ET SOLUTION RENCONTRÉES
+
+## - Impressions FARIA Théo:
 
 Durant ce projet j'ai parfois été complètement perdu par certaines méthodes très avancées utilisées par mon camarade.
 Cependant, grâce à lui j'ai énormément appris et son aide m'a souvent été précieuse. Je lui suis très reconnaissant de sa patience et de sa volonté de m'inclure malgré tout. Il a réussi à me déléguer des taches plus simples et à m'expliquer ce que lui faisait.
 
 Je trouve notre projet bien construit, utilisant des moyens adaptés à chacuns des points du jeu. La division des classes est pertinente et les commentaires apportent une grande plus-value à ceux qui voudrait l'utiliser.
+
+## - Impressions GUEZO Loïc 
+
+Durant ce projet, j'ai pu tester et apprendre de nouvelles choses. J'ai pu aussi "tester" à gérer une "mini équipe" (on etait que 2). Mon camarade s'est quand même bien débrouillé comparé à notre différence de penser et comment gérer les problèmes.
+
+# CRÉDITS
 
 Ce projet à été réalisé par GUEZO Loïc et FARIA Théo.

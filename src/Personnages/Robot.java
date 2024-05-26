@@ -13,10 +13,9 @@ public class Robot extends Personnage {
     Mouvement move;
     String name;
     
-    public Robot(String name, int[] coordinate,Map m) {
+    public Robot(String name, int[] coordinate) {
         super(coordinate);
         this.name = name;
-        this.m=m;
     }
 
     /**Fonction commune aux sous-classes de Personnage
@@ -25,6 +24,8 @@ public class Robot extends Personnage {
 
     @Override
     public boolean round(Map map, String channel){
+        this.m = map;
+
         this.move=this.compare(this.choix(),this.getHeadCoordinate());
         // System.out.println("Mouvement choisi : "+this.move);
         this.moveSnake(move);
