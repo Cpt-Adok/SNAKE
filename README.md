@@ -41,6 +41,25 @@ Pour lancer le jeu en multijoueur avec Makefile (mot1 et mot2 sont des mots à c
 Sur windows, vous avez une autre option que personnellement je vous encourage, c'est l'utilisation du `run.bat`. Ce programme va lancer le Makefile mais aussi le faite de mettre l'utf-8 sur la session. Si vous utilisez pas le `run.bat`, vous aurez possiblement certains problèmes avec certains caractères qui seront remplacés par des "?", pour lancer le programme run.bat (mot1 et mot2 sont des mots à changer en fonction du canal):
 
 - `run.bat mot1 mot2` : il va uniquement lancer `Make channel=mot1 adversaire=mot2` et en même temps lancer `chcp 65001` qui va mettre l'utf-8.
+
+
+# RÉSEAU ET COMMUNICATION
+
+## Réseau
+
+
+## Channel
+
+Channel est le module d'échange entre la machine de l'utilisateur et son adversaire via le site Padiflac.
+Nous l'avons définie comme une sous-classe de Personnage.
+
+Pour communiquer, elle reprend essentiellement des méthodes de Réseau, comme sendContent ou getLastedContent. Son travail est donc en grande partie consacré à la conversion de ce qui est reçu et de ce qui va être envoyé.
+
+Le channel récupère les données contenues sur le channel qui y est dédié (le sien) et les représente dans le jeu du joueur local après conversion. Quand c'est au tour de celui-ci de jouer, il envoie le coup sur le channel adversaire et le tranforme en direction lisible, pour que celui-ci puisse l'utiliser.
+
+Nous avons testé Channel à distance sur 2 machines et la partie s'est déroulée correctement.
+
+
 # IA (Q-Learning)
 
 ## - Explications
@@ -74,6 +93,24 @@ Ce calcul sera la valeur de toutes les actions que l'IA va enregistrer dans sa b
 - $\max(Q(s_{t+1}, a))$ : est la valeur maximale de Q du prochain tour parmi toute sa base de donnée.
 
 
+# IA (sans Q-Learning)
+
+Nous avons rédigé une deuxième IA, beaucoup plus simple, pour prévenir des problèmes rencontrés avec la première.
+
+Celle-ci repose sur des mécaniques très simples.
+Dans un premier temps, elle analyse les cases situées autour de sa tête à une distance de une seule case. Elle détermine ensuite lesquelles sont des coups possibles et n'entrainent pas une mort directe. Pour faire le choix final, elle utilise la méthode nextInt(index) de Random.
+Quand elle est coincée et qu'aucune des cases l'entourant n'est un choix possible, elle gènère à nouveau un choix aléatoire parmi les 4 cases l'entourant.
+
+Les choix qu'elle fait sont donc partiellement aléatoires et évitent essentiellement une mort au coup suivant.
+
+
 # CRÉDITS
 
-Ce projet à été réalisé par FARIA Théo et GUEZO Loïc.
+#### Impressions FARIA Théo:
+
+Durant ce projet j'ai parfois été complètement perdu par certaines méthodes très avancées utilisées par mon camarade.
+Cependant, grâce à lui j'ai énormément appris et son aide m'a souvent été précieuse. Je lui suis très reconnaissant de sa patience et de sa volonté de m'inclure malgré tout. Il a réussi à me déléguer des taches plus simples et à m'expliquer ce que lui faisait.
+
+Je trouve notre projet bien construit, utilisant des moyens adaptés à chacuns des points du jeu. La division des classes est pertinente et les commentaires apportent une grande plus-value à ceux qui voudrait l'utiliser.
+
+Ce projet à été réalisé par GUEZO Loïc et FARIA Théo.
