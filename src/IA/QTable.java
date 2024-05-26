@@ -70,7 +70,7 @@ public class QTable {
         try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(path))) {
             qValues = (HashMap<Actions, Double>) ois.readObject();
 
-        } catch (IOException  | ClassNotFoundException e){
+        } catch (IOException  | ClassNotFoundException e) {
             save(path);
         }  
     }
@@ -83,5 +83,9 @@ public class QTable {
         for (Map.Entry<Actions, Double> value : qValues.entrySet()) {
             System.out.println(value.getKey().toString() + " -> " + value.getValue());
         }
+    }
+
+    public HashMap<Actions, Double> getqValues() {
+        return qValues;
     }
 }
