@@ -1,9 +1,6 @@
 package connexion;
 
-import java.util.Arrays;
-
 import environnements.*;
-import types.Item;
 import types.Mouvement;
 import personnages.Personnage;
 
@@ -12,12 +9,9 @@ public class Channel extends Personnage {
     private static Reseau adversaire;
     private String channel;
 
-    private Map map;
-
     public Channel(Map map, String channel, String autreChannel) {
         super(new int [] {map.getGrid()[0].length - 1, map.getGrid().length - 1});
 
-        this.map = map;
         this.name = autreChannel;
 
         this.channel = channel;

@@ -28,9 +28,10 @@ public class Display {
 
     public static void printMap(Grid[][] map) {
         for (int i = 0; i<map.length; i++) {
+            if (i > 0 && map.length > i+1) System.out.print("  ");
             for(int k = 0; k<map[0].length; k++) {
                 if (map[i][k] == Item.WALL) printWall(map, k, i);
-                print(map[i][k]);                    
+                print(map[i][k]); 
             }
             System.out.println();
         }
@@ -52,7 +53,10 @@ public class Display {
         };
 
         for(Wall value : Wall.values()) {
-            if(value.isEqual(position)) map[y][x].updateStringCode(value.getAscii());
+            if(value.isEqual(position))  {
+                map[y][x].updateStringCode(value.getAscii());
+                break;
+            }
         }
     }
 
