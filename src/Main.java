@@ -15,8 +15,8 @@ public class Main {
         if (args.length < 2) {
             Grid[][] grid = map.getGrid();
 
-            QTable qTable = new QTable();
-            qTable.getValues("res" + File.separator + "save" + File.separator + "learn.ser");
+            // QTable qTable = new QTable();
+            // qTable.getValues("res" + File.separator + "save" + File.separator + "learn.ser");
 
             // Avant de jouer contre l'ia, vous pouvez essayer de l'entrainer avec la fonction tests.IATest.learnIAvsIA()
             // il jouera avec lui meme et mettra les sauvegardes dans le dossier learn.ser, 
