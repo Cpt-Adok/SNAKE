@@ -1,7 +1,7 @@
 package tests;
 
-import personnages.Personnage;
-import personnages.Player;
+import personnage.Personnage;
+import personnage.Player;
 import types.Effect;
 import types.Mouvement;
 

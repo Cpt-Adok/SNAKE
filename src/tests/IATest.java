@@ -4,10 +4,10 @@ import java.io.File;
 
 import IA.QTable;
 import IA.State;
-import environnements.Grid;
-import environnements.Map;
-import personnages.IAQLearning;
-import personnages.Personnage;
+import environnement.Grid;
+import environnement.Map;
+import personnage.IAQLearning;
+import personnage.Personnage;
 import types.Mouvement;
 
 public class IATest {

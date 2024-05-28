@@ -1,6 +1,6 @@
 package types;
 
-import environnements.Grid;
+import environnement.Grid;
 
 public enum SnakePart implements Grid {
     HEAD(Effect.IMPASSABLE, " \u25CF "),

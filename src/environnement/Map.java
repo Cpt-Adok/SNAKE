@@ -1,10 +1,10 @@
-package environnements;
+package environnement;
 
 import java.util.ArrayList;
 import java.util.Random;
 
+import personnage.*;
 import types.*;
-import personnages.*;
 
 
 /**

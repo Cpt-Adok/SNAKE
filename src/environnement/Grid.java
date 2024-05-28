@@ -1,4 +1,4 @@
-package environnements;
+package environnement;
 
 import java.io.Serializable;
 import types.Effect;

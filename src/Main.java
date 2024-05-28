@@ -1,9 +1,9 @@
 import java.io.File;
 
 import IA.QTable;
-import environnements.*;
+import environnement.*;
 import game.Terminal;
-import personnages.*;
+import personnage.*;
 
 public class Main {
     public static void main(String[] args) {

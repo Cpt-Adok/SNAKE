@@ -1,7 +1,7 @@
 package display;
 
-import environnements.Grid;
-import personnages.Personnage;
+import environnement.Grid;
+import personnage.Personnage;
 import types.Item;
 
 public class Display {

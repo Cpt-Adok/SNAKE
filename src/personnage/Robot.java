@@ -1,11 +1,11 @@
-package personnages;
+package personnage;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 import types.*;
-import environnements.*; 
 import connexion.*;
+import environnement.*;
 
 public class Robot extends Personnage {
 

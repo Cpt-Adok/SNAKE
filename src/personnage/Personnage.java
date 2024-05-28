@@ -1,8 +1,8 @@
-package personnages;
+package personnage;
 
 import java.util.ArrayList;
 
-import environnements.*;
+import environnement.*;
 import types.*;
 
 /**

@@ -1,8 +1,8 @@
 package tests;
 
 import display.Display;
-import environnements.Map;
-import personnages.Player;
+import environnement.Map;
+import personnage.Player;
 import types.Item;
 
 public class MapTest {

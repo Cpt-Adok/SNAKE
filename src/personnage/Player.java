@@ -1,9 +1,9 @@
-package personnages;
+package personnage;
 
 import java.util.Scanner;
 
 import connexion.Channel;
-import environnements.Map;
+import environnement.Map;
 import types.*;
 
 /**
