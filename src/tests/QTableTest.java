@@ -6,7 +6,7 @@ import java.util.Arrays;
 
 import IA.QTable;
 import IA.State;
-import environnements.Grid;
+import environnement.Grid;
 import types.Mouvement;
 
 public class QTableTest {

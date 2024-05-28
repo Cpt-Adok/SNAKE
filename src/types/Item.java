@@ -1,6 +1,6 @@
 package types;
 
-import environnements.Grid;
+import environnement.Grid;
 
 /**
  * cette enum représente différents types d'objets dans le jeu.

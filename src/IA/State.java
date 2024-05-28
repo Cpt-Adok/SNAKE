@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
 
-import environnements.Grid;
+import environnement.Grid;
 
 /**
  * La classe Etats est cruciale pour le Q-Learning car c'est elle

@@ -1,11 +1,11 @@
-package personnages;
+package personnage;
 
 import java.util.UUID;
 
 import IA.*;
 import connexion.Channel;
-import environnements.Grid;
-import environnements.Map;
+import environnement.Grid;
+import environnement.Map;
 import types.Mouvement;
 
 /**
