@@ -95,6 +95,7 @@ public class QLearning {
                     bestMouvement = mouvement;
                 }
             }
+
             return bestMouvement;
         }
     }
