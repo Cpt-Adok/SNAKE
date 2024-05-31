@@ -1,9 +1,11 @@
 package tests;
 
 import java.io.File;
+import java.util.Arrays;
 
 import IA.QTable;
 import IA.State;
+import display.Display;
 import environnement.Grid;
 import environnement.Map;
 import personnage.IAQLearning;
@@ -22,14 +24,14 @@ public class IATest {
         double decay_rate = 0.995; 
         double minEpsilon = 0.01;
 
-        int totalEpisodes = 1000;
+        int totalEpisodes = 200;
 
-        Personnage.n = 2;
+        Personnage.n = 4;
 
         for(int episode = 0; episode < totalEpisodes; episode++) {
             QTable qTable = new QTable();
-            IAQLearning iaqLearning = new IAQLearning(new int[] {0, 0}, qTable, alpha, gamma, epsilon);
-            Map map = new Map(20, 20);
+            IAQLearning iaqLearning = new IAQLearning(new int[] {2, 2}, qTable, alpha, gamma, epsilon);
+            Map map = new Map(12, 22);
     
             qTable.getValues(path);
     
@@ -72,37 +74,29 @@ public class IATest {
     public static void learnIAvsIA() {
         double alpha = 0.1;
         double gamma = 0.9;
+        double epsilon = 0.1;
 
-        double[] epsilon = new double[] {1.0,};
-        
-        double decay_rate = 0.995;
-        double minEpsilon = 0.01;
-
-        int totalEpisodes = 1000;
+        int maxEpisode = 1000;
 
         Personnage.n = 4;
 
-        for (int episode = 0; episode < totalEpisodes; episode++) {
+        for (int episode = 0; episode < maxEpisode; episode++) {
             QTable qTable = new QTable();
-
-            IAQLearning[] iaqLearnings = new IAQLearning[] {
-                new IAQLearning(new int[] {2, 2}, qTable, alpha, gamma, epsilon[0]),
-                new IAQLearning(new int[] {9, 19}, qTable, alpha, gamma, epsilon[1])
-            };
-
-            Map map = new Map(12, 22);
-            
-            boolean isGameOver = false;
-
             qTable.getValues(path);
 
-            while(true) {
-                for (int i = 0; i < iaqLearnings.length; i++) {
-                    IAQLearning iaqLearning = iaqLearnings[i];
+            Map map = new Map(12, 22);
 
-                    Grid[][] gridMap = map.getGrid();
-                    Map mapIA = new Map(gridMap[0].length, gridMap.length);
-                    mapIA.replaceGrid(gridMap);
+            IAQLearning[] iaqLearnings = new IAQLearning[] {
+                new IAQLearning(new int[] {2, 2}, qTable, alpha, gamma, epsilon),
+                new IAQLearning(new int[] {9, 19}, qTable, alpha, gamma, epsilon),
+            };
+
+            boolean isGameOver = false;
+
+            while(true) {
+                for (int personnages = 0; personnages < iaqLearnings.length; personnages++) {
+                    IAQLearning iaqLearning = iaqLearnings[personnages];
+                    Map mapIA = new Map(map.getGrid()[0].length, map.getGrid().length);
 
                     for (IAQLearning value : iaqLearnings) {
                         map.placePersonnages(value);
@@ -110,15 +104,25 @@ public class IATest {
 
                     State currentState = iaqLearning.getCurrentState(map.getGrid());
                     Mouvement mouvement = iaqLearning.bestMouvement(currentState);
-    
+
                     iaqLearning.moveSnake(mouvement);
 
                     int[] coordinate = iaqLearning.getHeadCoordinate();
 
-                    for (int[] snakeCoordinate : iaqLearnings[(i + 1) % 2].getCoordinate()) {
-                        if (coordinate[0] == snakeCoordinate[0] && coordinate[1] == snakeCoordinate[1]) {
-                            iaqLearning.receiveReward(currentState, mouvement, -10.0, currentState);
-                            iaqLearnings[(i + 1) % 2].receiveReward(currentState, mouvement, 10.0, currentState);
+                    if (map.isGameOver(coordinate) || iaqLearning.applyEffects(map.getEffect(coordinate))) {
+                        iaqLearning.receiveReward(currentState, mouvement, -1000, currentState);
+                        isGameOver = true;
+                        break;
+                    }
+
+                    int value = (personnages + 1) % 2; 
+
+                    for (int[] snakeCoordinate : iaqLearnings[value].getCoordinate()) {
+                        if (Arrays.equals(coordinate, snakeCoordinate)) {
+                            iaqLearnings[value].receiveReward(currentState, mouvement, 1000, currentState);
+                            iaqLearning.receiveReward(currentState, mouvement, -500, currentState);
+                        
+                            isGameOver = true;
                             break;
                         }
                     }
@@ -126,24 +130,19 @@ public class IATest {
                     mapIA.placePersonnages(iaqLearning);
 
                     State nextState = iaqLearning.getCurrentState(mapIA.getGrid());
-                    iaqLearning.receiveReward(currentState, mouvement, -0.1, nextState);
+                    iaqLearning.receiveReward(currentState, mouvement, -0.01, nextState);
 
                     iaqLearning.increaseRound();
 
                     mapIA.clearMap();
                     map.clearMap();
                 }
-
+            
                 if(isGameOver) break;
+                qTable.save(path);
+
+                System.out.println("Episode: " + episode + " States: " + qTable.getqValues().size());
             }
-
-            qTable.save(path);
-
-            for (int i = 0; i < epsilon.length; i++) {
-                epsilon[i] = Math.max(minEpsilon, epsilon[i] * decay_rate);
-            }
-
-            System.out.println("Episode: " + episode + " | Robot 1 States: " + qTable.getqValues().size());
         }
     }
 }
