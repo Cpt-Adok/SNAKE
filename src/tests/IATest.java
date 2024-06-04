@@ -13,9 +13,13 @@ import personnage.Personnage;
 import types.Mouvement;
 
 public class IATest {
-    private final static String path = "res" + File.separator + 
+    private final static String path1 = "res" + File.separator + 
                                     "save" + File.separator + 
-                                    "learn.ser";
+                                    "learn1.ser";
+
+    private final static String path2 = "res" + File.separator + 
+                                    "save" + File.separator + 
+                                    "learn2.ser";
 
     public static void learnIA() {
         double alpha = 0.1;
@@ -33,7 +37,7 @@ public class IATest {
             IAQLearning iaqLearning = new IAQLearning(new int[] {2, 2}, qTable, alpha, gamma, epsilon);
             Map map = new Map(12, 22);
     
-            qTable.getValues(path);
+            qTable.getValues(path1);
     
             while (true) {
                 Map mapIA = new Map(map.getGrid()[0].length, map.getGrid().length);
@@ -64,31 +68,34 @@ public class IATest {
                 map.clearMap(); 
             }
 
-            qTable.save(path);
+            qTable.save(path1);
 
             epsilon = Math.max(minEpsilon, epsilon * decay_rate);
-            System.out.println("Episode : " + episode + " | Robot 1 States : " + qTable.getqValues().size());
+            System.out.println("Episode : " + episode + " | States : " + qTable.getqValues().size());
         }
     }
 
     public static void learnIAvsIA() {
-        double alpha = 0.1;
+        double alpha = 0.9;
         double gamma = 0.9;
         double epsilon = 0.1;
 
-        int maxEpisode = 1000;
+        int maxEpisode = 1000000;
 
         Personnage.n = 4;
 
-        for (int episode = 0; episode < maxEpisode; episode++) {
-            QTable qTable = new QTable();
-            qTable.getValues(path);
+        QTable qTable1 = new QTable();
+        qTable1.getValues(path1);
 
+        QTable qTable2 = new QTable();
+        qTable2.getValues(path2);
+
+        for (int episode = 0; episode < maxEpisode; episode++) {
             Map map = new Map(12, 22);
 
             IAQLearning[] iaqLearnings = new IAQLearning[] {
-                new IAQLearning(new int[] {2, 2}, qTable, alpha, gamma, epsilon),
-                new IAQLearning(new int[] {9, 19}, qTable, alpha, gamma, epsilon),
+                new IAQLearning(new int[] {2, 2}, qTable1, alpha, gamma, epsilon),
+                new IAQLearning(new int[] {9, 19}, qTable2, alpha, gamma, epsilon),
             };
 
             boolean isGameOver = false;
@@ -136,13 +143,14 @@ public class IATest {
 
                     mapIA.clearMap();
                     map.clearMap();
+
+                    System.out.println("States 1: " + qTable1.getqValues().size() + " States 2: " + qTable2.getqValues().size());
                 }
             
                 if(isGameOver) break;
-                qTable.save(path);
-
-                System.out.println("Episode: " + episode + " States: " + qTable.getqValues().size());
             }
+            System.out.println(" States 1: " + qTable1.getqValues().size() + " States 2: " + qTable2.getqValues().size() + "Episode: " + episode);
         }
+        qTable1.save(path1);
     }
 }
