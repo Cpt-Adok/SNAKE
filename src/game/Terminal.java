@@ -54,35 +54,19 @@ public class Terminal {
     }
 
     public void run(String channel, String channelAdversaire) {
-        int i = 0;
         Personnage[] personnageChannel = new Personnage[] {
             personnages[0], 
             new Channel(map, channel, channelAdversaire)
         };
 
-        while(true) {
-            for(Personnage personnage : personnageChannel) {
-                Display.clearTerminal();
-
-                map.placeObjects();
-                placePersonnages(personnageChannel);
-
-                Display.printInformation(i++, personnage);
-                Display.printMap(map.addEdges());
-                
-                if(personnage.round(map, channel)) {
-                    Display.clearTerminal();
-                    System.out.println(personnage.getName() + " à perdu!");
-                    return;
-                }
-                map.clearMap();
-            }
-        }
+        loop(personnageChannel, channel);
     }
 
     public void run() {
-        int i = 0;
+        loop(personnages, null);
+    }
 
+    private void loop(Personnage[] personnages, String channel) {
         while(true) {
             for(Personnage personnage : personnages) {
                 Display.clearTerminal();
@@ -90,12 +74,13 @@ public class Terminal {
                 map.placeObjects();
                 placePersonnages(personnages);
 
-                Display.printInformation(i++, personnage);
+                Display.printInformation(personnage);
                 Display.printMap(map.addEdges());
                 
-                if(personnage.round(map, null)) {
+                if(personnage.round(map, channel)) {
                     Display.clearTerminal();
                     System.out.println(personnage.getName() + " à perdu!");
+                    Display.resetRound();
                     return;
                 }
                 map.clearMap();
