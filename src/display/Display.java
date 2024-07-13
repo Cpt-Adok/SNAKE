@@ -5,6 +5,8 @@ import personnage.Personnage;
 import types.Item;
 
 public class Display {
+    private static int round = 0;
+
     /**
      * cette fonction clear le terminal et le remet en
      * haut a gauche de la ligne.
@@ -60,12 +62,16 @@ public class Display {
         }
     }
 
-    public static void printInformation(int round, Personnage personnage) {
+    public static void printInformation(Personnage personnage) {
         int[] coordinate = personnage.getHeadCoordinate();
 
         System.out.println(
             "Round : " + round + " | N : " + Personnage.n +"\n  Joueur : " + personnage.getName() + 
             " (" + coordinate[0]+", "+ coordinate[1] +") | size : " + personnage.getSize()
         );
+    }
+
+    public static void resetRound() {
+        round = 0;
     }
 }
