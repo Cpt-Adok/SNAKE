@@ -26,7 +26,11 @@ public class Main {
      * Vous pouvez tous les appeler en faisant:
      *      new Player(new int[] {x, y}, "name")
      *      new Robot("name", new int[] {x, y})
-     *      new IAQLearning(new int[] {x, y}, classe QTable),
+     *      new IAQLearning(new int[] {x, y}, class QTable)
+     * 
+     * Pour la QTable, il est préférable de créer une variable avec la
+     * déclaration de la classe : 
+     *      QTable qtable = new QTable();
      * 
      */
     private static Personnage[] personnages = new Personnage[] {
