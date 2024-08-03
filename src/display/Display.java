@@ -1,8 +1,8 @@
 package display;
 
-import environnement.Grid;
+import game.environnement.Grid;
 import personnage.Personnage;
-import types.Item;
+import personnage.types.Item;
 
 public class Display {
     private static int round = 0;

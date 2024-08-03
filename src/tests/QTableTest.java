@@ -4,10 +4,10 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import IA.QTable;
-import IA.State;
-import environnement.Grid;
-import types.Mouvement;
+import game.environnement.Grid;
+import personnage.IAQLearning.QTable;
+import personnage.IAQLearning.State;
+import personnage.types.Mouvement;
 
 public class QTableTest {
     private final static String path = "res" + File.separator + 

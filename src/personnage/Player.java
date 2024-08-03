@@ -2,9 +2,9 @@ package personnage;
 
 import java.util.Scanner;
 
-import connexion.Channel;
-import environnement.Map;
-import types.*;
+import game.connexion.Channel;
+import game.environnement.Map;
+import personnage.types.*;
 
 /**
  * la classe Player a comme classe parent {@link Personnage}

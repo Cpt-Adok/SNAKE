@@ -1,9 +1,9 @@
-package IA;
+package personnage.IAQLearning;
 
 import java.io.Serializable;
 import java.util.Objects;
 
-import types.Mouvement;
+import personnage.types.Mouvement;
 
 /**
  * Cette classe permet de sauvegarder chaque action que l'IA 

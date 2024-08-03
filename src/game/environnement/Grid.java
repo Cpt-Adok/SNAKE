@@ -1,7 +1,8 @@
-package environnement;
+package game.environnement;
 
 import java.io.Serializable;
-import types.Effect;
+
+import personnage.types.Effect;
 
 public interface Grid extends Serializable {
     /**

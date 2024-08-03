@@ -1,8 +1,8 @@
 package game;
 
-import connexion.Channel;
 import display.Display;
-import environnement.Map;
+import game.connexion.Channel;
+import game.environnement.Map;
 import personnage.Personnage;
 
 

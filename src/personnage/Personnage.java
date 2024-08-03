@@ -2,8 +2,8 @@ package personnage;
 
 import java.util.ArrayList;
 
-import environnement.*;
-import types.*;
+import game.environnement.*;
+import personnage.types.*;
 
 /**
  * Cette classe est la primitive des classes

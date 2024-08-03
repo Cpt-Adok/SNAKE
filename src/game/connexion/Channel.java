@@ -1,8 +1,8 @@
-package connexion;
+package game.connexion;
 
-import types.Mouvement;
-import environnement.*;
+import game.environnement.*;
 import personnage.Personnage;
+import personnage.types.Mouvement;
 
 public class Channel extends Personnage {
     private Reseau reseau;

@@ -1,4 +1,4 @@
-package connexion;
+package game.connexion;
 
 import java.io.IOException;
 import java.io.InputStream;

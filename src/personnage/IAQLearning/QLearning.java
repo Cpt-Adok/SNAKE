@@ -1,6 +1,6 @@
-package IA;
+package personnage.IAQLearning;
 
-import types.Mouvement;
+import personnage.types.Mouvement;
 
 /**
  * Cette classe représente un algorithme d'apprentissage par renforcement

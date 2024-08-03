@@ -1,11 +1,11 @@
-package IA;
+package personnage.IAQLearning;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
 
-import environnement.Grid;
+import game.environnement.Grid;
 
 /**
  * La classe Etats est cruciale pour le Q-Learning car c'est elle

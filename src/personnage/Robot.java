@@ -3,9 +3,9 @@ package personnage;
 import java.util.ArrayList;
 import java.util.Random;
 
-import types.*;
-import connexion.*;
-import environnement.*;
+import game.connexion.*;
+import game.environnement.*;
+import personnage.types.*;
 
 public class Robot extends Personnage {
 

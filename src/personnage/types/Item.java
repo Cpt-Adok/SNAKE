@@ -1,6 +1,6 @@
-package types;
+package personnage.types;
 
-import environnement.Grid;
+import game.environnement.Grid;
 
 /**
  * cette enum représente différents types d'objets dans le jeu.
@@ -9,7 +9,7 @@ public enum Item implements Grid {
     /**
      * Mur impassable.
      * Effet associé :  <pre>{@code types.Effect.IMPASSABLE}</pre>
-     * utf : null car c'est un autre programme qui gère le mur.
+     * utf : null car c'est une autre fonction qui gère le mur.
      */
     WALL(Effect.IMPASSABLE, null),
 

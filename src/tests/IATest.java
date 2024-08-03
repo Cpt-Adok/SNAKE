@@ -3,14 +3,14 @@ package tests;
 import java.io.File;
 import java.util.Arrays;
 
-import IA.QTable;
-import IA.State;
 import display.Display;
-import environnement.Grid;
-import environnement.Map;
-import personnage.IAQLearning;
+import game.environnement.Grid;
+import game.environnement.Map;
+import personnage.IA;
 import personnage.Personnage;
-import types.Mouvement;
+import personnage.IAQLearning.QTable;
+import personnage.IAQLearning.State;
+import personnage.types.Mouvement;
 
 public class IATest {
     private final static String path1 = "res" + File.separator + 
@@ -34,7 +34,7 @@ public class IATest {
 
         for(int episode = 0; episode < totalEpisodes; episode++) {
             QTable qTable = new QTable();
-            IAQLearning iaqLearning = new IAQLearning(new int[] {2, 2}, qTable, alpha, gamma, epsilon);
+            IA iaqLearning = new IA(new int[] {2, 2}, qTable, alpha, gamma, epsilon, null);
             Map map = new Map(12, 22);
     
             qTable.getValues(path1);
@@ -93,19 +93,19 @@ public class IATest {
         for (int episode = 0; episode < maxEpisode; episode++) {
             Map map = new Map(12, 22);
 
-            IAQLearning[] iaqLearnings = new IAQLearning[] {
-                new IAQLearning(new int[] {2, 2}, qTable1, alpha, gamma, epsilon),
-                new IAQLearning(new int[] {9, 19}, qTable2, alpha, gamma, epsilon),
+            IA[] iaqLearnings = new IA[] {
+                new IA(new int[] {2, 2}, qTable1, alpha, gamma, epsilon, null),
+                new IA(new int[] {9, 19}, qTable2, alpha, gamma, epsilon, null),
             };
 
             boolean isGameOver = false;
 
             while(true) {
                 for (int personnages = 0; personnages < iaqLearnings.length; personnages++) {
-                    IAQLearning iaqLearning = iaqLearnings[personnages];
+                    IA iaqLearning = iaqLearnings[personnages];
                     Map mapIA = new Map(map.getGrid()[0].length, map.getGrid().length);
 
-                    for (IAQLearning value : iaqLearnings) {
+                    for (IA value : iaqLearnings) {
                         map.placePersonnages(value);
                     }
 

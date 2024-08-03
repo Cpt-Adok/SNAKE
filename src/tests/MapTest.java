@@ -1,9 +1,9 @@
 package tests;
 
 import display.Display;
-import environnement.Map;
+import game.environnement.Map;
 import personnage.Player;
-import types.Item;
+import personnage.types.Item;
 
 public class MapTest {
     public static void creationMap() {

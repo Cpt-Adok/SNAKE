@@ -1,4 +1,4 @@
-package types;
+package personnage.types;
 
 /**
  * cette enumérateur {@link Effects} contient tout les effets 

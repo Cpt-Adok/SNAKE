@@ -2,8 +2,8 @@ package tests;
 
 import personnage.Personnage;
 import personnage.Player;
-import types.Effect;
-import types.Mouvement;
+import personnage.types.Effect;
+import personnage.types.Mouvement;
 
 public class PersonnageTest {
     public static void avancerPersonnage() {

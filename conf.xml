@@ -1,0 +1,63 @@
+<!-- Configuration de la map du jeu -->
+<Map>
+    <!-- coordonnées de la map du jeu -->
+    <Coordinate>
+        <x>22</x>
+        <y>22</y>
+    </Coordinate>
+    <!-- coordonnées des murs qu'on doit rajouter -->
+    <Wall> 
+        <Coordinate>
+            <x>1</x>
+            <y>2</y>
+        </Coordinate>
+        <Coordinate>
+            <x>3</x>
+            <y>4</y>
+        </Coordinate>
+    </Wall>
+    <!-- coordonnées des fraises qu'on doit rajouter -->
+    <Fraise>
+    </Fraise>
+</Map>
+<!-- configuration des personnages du jeu -->
+<Personnage>
+    <!-- configuration des player du jeu -->
+    <Player>
+        <Philippe_Etchebest>
+            <Coordinate>
+                <x>2</x>
+                <y>2</y>
+            </Coordinate>
+            <IsPlaying>true</IsPlaying>
+        </Philippe_Etchebest>
+        <Luke_Skywalker>
+            <Coordinate>
+                <x>19</x>
+                <y>19</y>
+            </Coordinate>
+            <IsPlaying>true</IsPlaying>
+        </Luke_Skywalker>
+    </Player>
+    <!-- configuration des Robot du jeu -->
+    <Robot>
+        <Robot_1>
+            <Coordinate>
+                <x>2</x>
+                <y>2</y>
+            </Coordinate>
+            <IsPlaying>false</IsPlaying>
+        </Robot_1>
+    </Robot>
+    <!-- configuration des IA du jeu -->
+    <IA>
+        <IA_1>
+            <Coordinate>
+                <x>2</x>
+                <y>2</y>
+            </Coordinate>
+            <Path>res/save/</Path>
+            <IsPlaying>false</IsPlaying>
+        </IA_1>
+    </IA>
+</Personnage>

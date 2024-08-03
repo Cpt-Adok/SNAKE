@@ -1,10 +1,10 @@
-package IA;
+package personnage.IAQLearning;
 
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
-import types.Mouvement;
+import personnage.types.Mouvement;
 
 /**
  * cette classe permet de sauvegarder chaque action que l'IA 

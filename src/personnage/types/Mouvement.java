@@ -1,4 +1,4 @@
-package types;
+package personnage.types;
 
 /**
  * Cet enumerateur prend en charge tout les mouvements possible

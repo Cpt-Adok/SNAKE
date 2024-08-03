@@ -2,17 +2,17 @@ package personnage;
 
 import java.util.UUID;
 
-import IA.*;
-import connexion.Channel;
-import environnement.Grid;
-import environnement.Map;
-import types.Mouvement;
+import game.connexion.Channel;
+import game.environnement.Grid;
+import game.environnement.Map;
+import personnage.IAQLearning.*;
+import personnage.types.Mouvement;
 
 /**
  * La classe IAQLearning représente un joueur contrôlé par une Intelligence Artificielle
  * utilisant l'algorithme de Q-learning pour prendre des décisions dans un jeu.
  */
-public class IAQLearning extends Personnage {
+public class IA extends Personnage {
     private QLearning qLearning; // L'algorithme de Q-learning utilisé par l'IA.
 
     /** 
@@ -22,14 +22,14 @@ public class IAQLearning extends Personnage {
      * @param gamma Le facteur de récompense future de l'algorithme de Q-learning.
      * @param epsilon Le taux d'exploration de l'algorithme de Q-learning.
      */
-    public IAQLearning(int[] coordinate, QTable qTable, double alpha, double gamma, double epsilon) {
+    public IA(int[] coordinate, QTable qTable, double alpha, double gamma, double epsilon, String name) {
         super(coordinate); // Appel au constructeur de la classe mère.
 
         // Initialisation de l'algorithme de Q-learning avec les paramètres spécifiés.
         this.qLearning = new QLearning(qTable, alpha, gamma, epsilon);
 
         // Attribution d'un nom unique à l'IA.
-        this.name = "IA : " + UUID.randomUUID();
+        this.name = (name == null) ? "IA : " + UUID.randomUUID() : name;
     }
 
     /**
@@ -38,10 +38,10 @@ public class IAQLearning extends Personnage {
      * @param coordinate
      * @param qTable
      */
-    public IAQLearning(int[] coordinate, QTable qTable) {
+    public IA(int[] coordinate, QTable qTable, String name) {
         super(coordinate); // Appel au constructeur de la classe mère.
         this.qLearning = new QLearning(qTable, 0.0, 0.0, 0.0);
-        this.name = "IA : " + UUID.randomUUID();
+        this.name = (name == null) ? "IA : " + UUID.randomUUID() : name;
     }
 
     /**

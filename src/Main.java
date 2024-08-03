@@ -1,9 +1,9 @@
 import java.io.File;
 
-import IA.QTable;
-import environnement.*;
 import game.Terminal;
+import game.environnement.*;
 import personnage.*;
+import personnage.IAQLearning.QTable;
 import tests.IATest;
 
 public class Main {
