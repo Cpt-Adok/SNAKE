@@ -1,5 +1,8 @@
 import java.io.File;
+import java.io.ObjectInputFilter.Config;
+import java.util.ArrayList;
 
+import configuration.ConfigXml;
 import game.Terminal;
 import game.environnement.*;
 import personnage.*;
@@ -7,8 +10,6 @@ import personnage.IAQLearning.QTable;
 import tests.IATest;
 
 public class Main {
-    private static Map map = new Map(12, 22);
-
     /**
      * Dans ce jeu, il y a 3 types de personnage disponible :
      *      - Les Joueurs (Player)
@@ -33,12 +34,12 @@ public class Main {
      *      QTable qtable = new QTable();
      * 
      */
-    private static Personnage[] personnages = new Personnage[] {
-        new Player(new int[] {2, 2}, "Philippe Etchebest"),
-        new Player(new int[] {map.getGrid()[0].length - 3, map.getGrid().length - 3}, "Luke Skywalker")
-    };
 
     public static void main(String[] args) {
+        ConfigXml configXml = new ConfigXml(null);
+        Personnage[] personnages = configXml.getCharacters();
+        Map map = configXml.getMap();
+        
         Personnage.n = 4;
 
         if (args.length < 1) { new Terminal(map, personnages).run(); }                          // lancer en local

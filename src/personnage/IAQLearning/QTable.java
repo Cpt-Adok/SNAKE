@@ -27,6 +27,15 @@ public class QTable {
     public QTable() {
         qValues = new HashMap<>();
     }
+
+    /**
+     * Constructeur de la classe QTable cree le HashMap qValues et mets dans la liste
+     * les informations du fichier dans le path.
+     */
+    public QTable(String pathFile) {
+        qValues = new HashMap<>();
+        getValues(pathFile);
+    }
     
     /**
      * cette fonction renvoie soit la valeur associé à l'action de l'etat 
