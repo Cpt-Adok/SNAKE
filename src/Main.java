@@ -1,13 +1,7 @@
-import java.io.File;
-import java.io.ObjectInputFilter.Config;
-import java.util.ArrayList;
-
 import configuration.ConfigGame;
 import game.Terminal;
 import game.environnement.*;
 import personnage.*;
-import personnage.IAQLearning.QTable;
-import tests.IATest;
 
 public class Main {
     /**

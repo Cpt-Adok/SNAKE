@@ -20,7 +20,7 @@ C'est un projet de fin de Licence L1 en Informatique à UPEC, la création d'un 
 
 - La partie **PROBLÈME ET SOLUTION RENCONTRÉES**
 
-## AVANT TOUT : Comment lancer le jeu.
+## AVANT TOUT : Comment lancer le jeu
 
 Pour lancer le jeu, nous pouvons utiliser les addons de vscode en appuyant sur ***run*** sur la methode **main**.
 
@@ -35,6 +35,7 @@ Les commandes pour le makefile :
 - `Make run` : il va uniquement lancer l'interpréteur java (Attention à ne pas supprimer le bin avant)
 
 Pour lancer le jeu en multijoueur avec Makefile (mot1 et mot2 sont des mots à changer en fonction du canal):
+
 - `Make channel=mot1 adversaire=mot2` : compile tout le programme et le lance en multijoueur.
 - `Make run channel=mot1 adversaire=mot2` : lance uniquement le programme en multijoueur.
 
@@ -42,6 +43,67 @@ Sur windows, vous avez une autre option que personnellement je vous encourage, c
 
 - `run.bat mot1 mot2` : il va uniquement lancer `Make channel=mot1 adversaire=mot2` et en même temps lancer `chcp 65001` qui va mettre l'utf-8.
 
+## Fichier de configuration
+
+- Le fichier de configuration sert à créer une partie sans recompiler en `.class` le programme. Étant en format xml, il ressemble à des balises html et donc plus facile  à comprendre.
+
+Pour que le programme comprenne le fichier xml, il doit y avoir des balises spécifiques:
+
+- `Configuration` est la racine du programme, il a comme attribut n pour la taille du snake. Exemple : 
+  
+  ```xml
+  <Configuration n="2"></Configuration>
+  ```
+
+- `Map` est la balise principale pour la gestion de la carte du jeu. Il y a comme attribut la taille x et y de la carte. Il permet aussi de placer les balises fraises et des murs. Exemple : 
+  
+  ```xml
+  <Map x="22" y="22"></Map>
+  ```
+
+- `Fraise` et `Wall`  sont des balises pour placer une fraise ou un mur avec comme attributs x et y. Exemple : 
+  
+  ```xml
+  <Wall x="3" y="4"/>
+  <Fraise x="5" y="6"/>
+  ```
+
+- `Personnage` est la balise principale pour la gestion des personnages du jeu. Il permet de placer des balises IA, Robot et Player. Exemple : 
+  
+  ```xml
+  <Personnage></Personnage>
+  ```
+
+- `Player`, `Robot` et `IA` sont des balises pour placer des personnages avec des attributs comme name, x et y. Sur la balise IA, on doit aussi mettre QTable avec le dossier ou le fichier qui sert a stocker l'apprentissage de l'IA. Exemple : 
+  
+  ```xml
+  <Player name="Philippe_Etchebest" x="2" y="2"/>
+  <Robot name="R2D2" x="19" y="19"/>
+  <IA name="incognito" x="19" y="19" QTable="res/save"/>
+  ```
+
+**Exemple de configuration :**
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Configuration globale -->
+<Configuration n="2">
+    <!-- Configuration de la map -->
+    <Map x="22" y="22">
+        <Wall x="1" y="2"/>
+        <Fraise x="5" y="6"/> 
+    </Map>
+    
+    <!-- Configuration des personnages -->
+    <Personnage>
+        <IA name="incognito" x="19" y="19" QTable="res/save"/>
+        <Robot name="R2D2" x="19" y="19"/>
+    </Personnage>
+</Configuration>
+```
+
+``
 
 # JEU et GAMEPLAY
 
@@ -65,7 +127,6 @@ Pour communiquer, elle reprend essentiellement des méthodes de Réseau, comme s
 Le channel récupère les données contenues sur le channel qui y est dédié (le sien) et les représente dans le jeu du joueur local après conversion. Quand c'est au tour de celui-ci de jouer, il envoie le coup sur le channel adversaire et le tranforme en direction lisible, pour que celui-ci puisse l'utiliser.
 
 Nous avons testé Channel à distance sur 2 machines et la partie s'est déroulée correctement.
-
 
 # IA (Q-Learning)
 
@@ -95,11 +156,14 @@ Ce calcul sera la valeur de toutes les actions que l'IA va enregistrer dans sa b
 - $Q(s_t, a_t)$ : est la valeur de Q actuelle, il contient  $s_t$ qui l'état et $a_t$ qui est l'action de Q.
 
 - $\alpha$ : est le taux d'apprentissage, c'est lui qui détermine si on doit écraser les valeurs ou non.
+
 - $R_t$ : est la récompense de l'action, si c'est une bonne action ou non.
+
 - $\gamma$ : est l'importance des futures récompenses.
+
 - $\max(Q(s_{t+1}, a))$ : est la valeur maximale de Q du prochain tour parmi toute sa base de donnée.
 
-## Resultat : 
+## Resultat :
 
 ![IA](res/video/ia_solo_15min_apprentissage.gif)
 
@@ -116,7 +180,7 @@ Quand elle est coincée et qu'aucune des cases l'entourant n'est un choix possib
 
 Les choix qu'elle fait sont donc partiellement aléatoires et évitent essentiellement une mort au coup suivant.
 
-# GRAPHIQUE 
+# GRAPHIQUE
 
 Nous avons utiliser le terminal pour faire notre parti graphique avec de l'utf-8, il est très important d'activer l'utf-8 sur les terminaux avant de lancer le jeu car vous pourrez avoir des problèmes comme des "?".
 
@@ -129,7 +193,7 @@ Cependant, grâce à lui j'ai énormément appris et son aide m'a souvent été 
 
 Je trouve notre projet bien construit, utilisant des moyens adaptés à chacuns des points du jeu. La division des classes est pertinente et les commentaires apportent une grande plus-value à ceux qui voudrait l'utiliser.
 
-## - Impressions GUEZO Loïc 
+## - Impressions GUEZO Loïc:
 
 Durant ce projet, j'ai pu tester et apprendre de nouvelles choses. J'ai pu aussi "tester" à gérer une "mini équipe" (on etait que 2). Mon camarade s'est quand même bien débrouillé comparé à notre différence de penser et comment gérer les problèmes.
 

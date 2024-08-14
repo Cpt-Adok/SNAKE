@@ -3,8 +3,6 @@ package tests;
 import java.io.File;
 import java.util.Arrays;
 
-import display.Display;
-import game.environnement.Grid;
 import game.environnement.Map;
 import personnage.IA;
 import personnage.Personnage;

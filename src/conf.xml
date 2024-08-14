@@ -1,22 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!-- Configuration globale -->
-<Configuration>
-    <Size n="2"/>
+<Configuration n="2">
     <!-- Configuration de la map -->
-    <Map>
-        <Coordinate x="22" y="22"/>
-
-        <Wall x="1" y="2"/>
-        <Wall x="3" y="4"/>
-        <Fraise x="5" y="6"/> 
-    </Map>
+    <Map x="22" y="22"></Map>
     
     <!-- Configuration des personnages -->
     <Personnage>
         <Player name="Philippe_Etchebest" x="2" y="2"/>
-        <!-- <Player name="Luke Skywalker" x="19" y="19"/> -->
-        <!-- <IA name="" x="19" y="19" QTable=""/> -->
-        <Robot name="R2D2" x="19" y="19"/>
+        <Player name="Luke Skywalker" x="19" y="19"/>
     </Personnage>
 </Configuration>

@@ -36,36 +36,39 @@ public class FileReaderXml {
 
     protected HashMap<String, ArrayList<HashMap<String, String>>> getElements() {
         HashMap<String, ArrayList<HashMap<String, String>>> elementsMap = new HashMap<>();
-        NodeList nodeList = document.getDocumentElement().getChildNodes();
+        Node nodeList = document.getDocumentElement();
         
         readElements(elementsMap, nodeList);
-
+        
         return elementsMap;
     }
 
-    private void readElements(HashMap<String, ArrayList<HashMap<String, String>>> elementsMap, NodeList nodeList) {
-        for (int i = 0; i < nodeList.getLength(); i++) {
-            Node childNodeList = nodeList.item(i);
+    private void readElements(HashMap<String, ArrayList<HashMap<String, String>>> elementsMap, Node currentNode) {
+        if (currentNode.getNodeType() == Node.ELEMENT_NODE) {
+            HashMap<String, String> attributeMap = new HashMap<>();
+            NamedNodeMap attributes = currentNode.getAttributes();
+            for (int j = 0; j < attributes.getLength(); j++) {
+                Node attribute = attributes.item(j);
+                attributeMap.put(attribute.getNodeName(), attribute.getNodeValue());
+            }
+            
+            String parentNodeName, fullNodeName;
+
+            if ((parentNodeName = currentNode.getParentNode().getNodeName()).charAt(0) == '#') {
+                fullNodeName = currentNode.getNodeName();
+            } else {
+                fullNodeName = parentNodeName + "." + currentNode.getNodeName();   
+            }
     
-            if (childNodeList.getNodeType() == Node.ELEMENT_NODE) {
-                HashMap<String, String> attributeMap = new HashMap<>();
-                NamedNodeMap attributes = childNodeList.getAttributes();
-                for (int j = 0; j < attributes.getLength(); j++) {
-                    Node attribute = attributes.item(j);
-                    attributeMap.put(attribute.getNodeName(), attribute.getNodeValue());
-                }
+            if (!elementsMap.containsKey(fullNodeName)) {
+                elementsMap.put(fullNodeName, new ArrayList<>());
+            }
     
-                String fullNodeName = childNodeList.getParentNode().getNodeName() + "." + childNodeList.getNodeName();
-    
-                if (!elementsMap.containsKey(fullNodeName)) {
-                    elementsMap.put(fullNodeName, new ArrayList<>());
-                }
-    
-                elementsMap.get(fullNodeName).add(attributeMap);
-    
-                if (childNodeList.hasChildNodes()) {
-                    readElements(elementsMap, childNodeList.getChildNodes());
-                }
+            elementsMap.get(fullNodeName).add(attributeMap);
+
+            NodeList childNodes = currentNode.getChildNodes();
+            for (int i = 0; i < childNodes.getLength(); i++) {
+                readElements(elementsMap, childNodes.item(i));
             }
         }
     }

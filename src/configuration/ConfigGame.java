@@ -23,21 +23,27 @@ public class ConfigGame {
         try {
             FileReaderXml fileReaderXml = new FileReaderXml(path);
             this.data = fileReaderXml.getElements();
+
+            if (this.data.get("Configuration") == null || this.data == null) {
+                System.err.println("Erreur: le fichier de configuration est introuvable.");
+                System.exit(-1);
+            }
+
         } catch (IOException | SAXException | ParserConfigurationException e) {
             e.printStackTrace();
         }
     }
 
     public Map getMap() {
-        ArrayList<HashMap<String,String>> mapList = data.get("Map.Coordinate");
+        ArrayList<HashMap<String,String>> mapList = data.get("Configuration.Map");
         
-        if (data.get("Configuration.Map") == null) {
+        if (mapList == null) {
             System.err.println("Erreur: La balise Map est introuvable.");
             System.exit(-1);
         }
 
         if (mapList.size() != 1) {
-            System.err.println("Erreur: Plusieurs Coordonnées trouvées.");
+            System.err.println("Erreur: Plusieurs ou Aucune Coordonnées trouvées.");
             System.exit(-1);
         }
 
@@ -52,13 +58,13 @@ public class ConfigGame {
     }
 
     public int getN() {
-        ArrayList<HashMap<String, String>> n;
+        HashMap<String, String> n;
 
-        if ((n = data.get("Configuration.Size")) == null) {
+        if ((n = data.get("Configuration").get(0)).isEmpty()) {
             return 4;
         } 
         
-        return Integer.parseInt(n.get(0).get("n"));
+        return Integer.parseInt(n.get("n"));
     }
 
     public Personnage[] getPersonnages() {
