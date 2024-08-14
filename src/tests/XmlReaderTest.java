@@ -1,11 +1,12 @@
 package tests;
 
-import configuration.ConfigXml;
-import configuration.FileReaderXml;
+import configuration.ConfigGame;
 
 public class XmlReaderTest {
     public static void main(String[] args) {
-        ConfigXml configXml = new ConfigXml(null);
-        System.out.println(configXml.getCharacters());
+        ConfigGame configXml = new ConfigGame(null);
+        System.out.println(configXml.getPersonnages());
+        System.out.println(configXml.getN());
+        System.out.println(configXml.getMap());
     }
 }

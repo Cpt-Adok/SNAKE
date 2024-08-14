@@ -2,7 +2,7 @@ import java.io.File;
 import java.io.ObjectInputFilter.Config;
 import java.util.ArrayList;
 
-import configuration.ConfigXml;
+import configuration.ConfigGame;
 import game.Terminal;
 import game.environnement.*;
 import personnage.*;
@@ -36,11 +36,11 @@ public class Main {
      */
 
     public static void main(String[] args) {
-        ConfigXml configXml = new ConfigXml(null);
-        Personnage[] personnages = configXml.getCharacters();
-        Map map = configXml.getMap();
-        
-        Personnage.n = 4;
+        ConfigGame config = new ConfigGame(null);
+
+        Personnage[] personnages = config.getPersonnages();
+        Map map = config.getMap();
+        Personnage.n = config.getN();
 
         if (args.length < 1) { new Terminal(map, personnages).run(); }                          // lancer en local
         else if (args.length == 2) { new Terminal(map, personnages).run(args[0], args[1]); }    // lancer en ligne

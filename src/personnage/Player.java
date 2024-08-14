@@ -24,8 +24,7 @@ public class Player extends Personnage {
      */
     public Player(int[] coordinate, String name) {
         super(coordinate);
-
-        this.name = name;
+        super.name = name;
     }
 
     public boolean moveCoordinate(int keys) {

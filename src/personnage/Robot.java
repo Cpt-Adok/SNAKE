@@ -8,14 +8,12 @@ import game.environnement.*;
 import personnage.types.*;
 
 public class Robot extends Personnage {
-
     Map m;
     Mouvement move;
-    String name;
     
     public Robot(String name, int[] coordinate) {
         super(coordinate);
-        this.name = name;
+        super.name = name;
     }
 
     /**Fonction commune aux sous-classes de Personnage

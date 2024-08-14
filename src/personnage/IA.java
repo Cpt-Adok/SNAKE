@@ -29,7 +29,7 @@ public class IA extends Personnage {
         this.qLearning = new QLearning(qTable, alpha, gamma, epsilon);
 
         // Attribution d'un nom unique à l'IA.
-        this.name = (name == null) ? "IA : " + UUID.randomUUID() : name;
+        super.name = (name == null) ? "IA : " + UUID.randomUUID() : name;
     }
 
     /**
