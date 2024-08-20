@@ -94,7 +94,7 @@ public class ConfigGame {
         return personnages;
     }
 
-    private Personnage choosePersonnage(String name, HashMap<String, String> information) throws Error {
+    private Personnage choosePersonnage(String name, HashMap<String, String> information) {
         int[] coordinate = new int[] {
             Integer.parseInt(information.get("x")),
             Integer.parseInt(information.get("y")),
@@ -105,7 +105,7 @@ public class ConfigGame {
             case "robot": return new Robot(information.get("name"), coordinate);
             case "ia": {
                 String path = information.get("QTable");
-                return new IA(coordinate, (path.equals("")) ? new QTable("res/save/") : new QTable(path), name);
+                return new IA(coordinate, new QTable(path.equals("") ? "res/save/" : path, name), name);
             }
         
             default: {

@@ -103,8 +103,6 @@ Pour que le programme comprenne le fichier xml, il doit y avoir des balises spé
 </Configuration>
 ```
 
-``
-
 # JEU et GAMEPLAY
 
 Ce jeu est un 1vs1 snake tactique tour par tour avec une gestion de mur et de fruits (que l'on peut ajouter aléatoirement ou en le directement en le placant par x et y), nous pouvons se déplacer avec les touches **z q s d ou/et w a s d**, le jeu se termine quand l'un des 2 snake meurt soit en foncant dans un corps, soit par un mur.
@@ -165,7 +163,7 @@ Ce calcul sera la valeur de toutes les actions que l'IA va enregistrer dans sa b
 
 ## Resultat :
 
-![IA](res/video/ia_solo_15min_apprentissage.gif)
+![IA](res/ia_solo_15min_apprentissage.gif)
 
 Dans cette vidéo, l'ia s'est entrainé pendant 15min tout seul et il a trouvé le meilleur chemin selon lui jusqu'à sa derniere erreur sur son apprentissage.
 si je l'apprennais encore un peu plus, il pourra rester le plus longtemps possible.

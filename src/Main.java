@@ -2,6 +2,7 @@ import configuration.ConfigGame;
 import game.Terminal;
 import game.environnement.*;
 import personnage.*;
+import personnage.IAQLearning.QTable;
 
 public class Main {
     /**
@@ -26,7 +27,6 @@ public class Main {
      * Pour la QTable, il est préférable de créer une variable avec la
      * déclaration de la classe : 
      *      QTable qtable = new QTable();
-     * 
      */
 
     public static void main(String[] args) {
@@ -35,6 +35,8 @@ public class Main {
         Personnage[] personnages = config.getPersonnages();
         Map map = config.getMap();
         Personnage.n = config.getN();
+
+        QTable.folderStorage = 1000;
 
         if (args.length < 1) { new Terminal(map, personnages).run(); }                          // lancer en local
         else if (args.length == 2) { new Terminal(map, personnages).run(args[0], args[1]); }    // lancer en ligne

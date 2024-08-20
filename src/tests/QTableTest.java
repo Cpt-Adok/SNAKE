@@ -1,6 +1,7 @@
 package tests;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -11,8 +12,7 @@ import personnage.types.Mouvement;
 
 public class QTableTest {
     private final static String path = "res" + File.separator + 
-                                       "save" + File.separator + 
-                                       "test.ser";
+                                       "save" + File.separator;
 
     public static void searchValue() {
         QTable qTable = new QTable();
@@ -21,24 +21,30 @@ public class QTableTest {
 
         qTable.setQValue(state, mouvement, 10.2);
 
-        qTable.printValues();
+        qTable.printHashMap();
 
         System.out.println(qTable.getQValue(state, mouvement)); // Devrait retourner 10.2
     }
 
     public static void writeValueFile() {
+        QTable.folderStorage = 1;
         QTable qTable = new QTable();
         State state = new State(new Grid[3][3], new ArrayList<>());
+        
         qTable.setQValue(state, Mouvement.BAS, 10.3);
-        qTable.save(path);  // Devrait sauvegarder dans test.ser le state avec la valeur 10.3 
+
+        qTable.setQValue(new State(new Grid[3][3], new ArrayList<>()), Mouvement.HAUT, 12.3);
+
+
+        qTable.save(path, "name");
     }
 
     public static void searchValueFile() {
         QTable qTable = new QTable();
-        qTable.getValues(path);
+        // qTable.get(path);
 
         State state = new State(new Grid[3][3], new ArrayList<>());
-        qTable.printValues();
+        qTable.printHashMap();
         System.out.println(qTable.getQValue(state, Mouvement.BAS)); // Devrait retourner 10.3
     }
 
@@ -55,9 +61,13 @@ public class QTableTest {
         QTable qTableReceived = new QTable();
 
         qTableSend.setQValue(state, mouvement, 102.0);
-        qTableSend.save(path);
+        qTableSend.save(path, "fromage");
 
-        qTableReceived.getValues(path);
+        try {qTableReceived.get(path, "fromage");} catch(ClassNotFoundException | IOException e) {e.printStackTrace();}
         System.out.println(qTableReceived.getQValue(state, mouvement));
+    }
+
+    public static void main(String[] args) {
+        getRealInformation();
     }
 }
