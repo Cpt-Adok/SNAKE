@@ -33,7 +33,7 @@ public class QTable {
     private ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
     /**
-     * Constructeur de la classe QTabl cree le HashMap qValues.
+     * Constructeur de la classe QTable cree le HashMap qValues.
      */
     public QTable() {
         qValues = new HashMap<>();
@@ -161,9 +161,7 @@ public class QTable {
                 for (File partFile : listFiles) {
                     executor.submit(() -> {
                         try {
-                            // Charger chaque fichier dans un HashMap temporaire
                             HashMap<Actions, Double> tempMap = getChunkSave(partFile.getPath());
-                            // Ajouter chaque entrée au ConcurrentHashMap
                             multithreadHashMap.putAll(tempMap);
                         } catch (ClassNotFoundException | IOException e) {
                             e.printStackTrace();

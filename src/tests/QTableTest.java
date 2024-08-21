@@ -54,17 +54,38 @@ public class QTableTest {
     }
 
     public static void getRealInformation() {
-        State state = new State(new Grid[3][3], new ArrayList<>(Arrays.asList(new int[] {1, 1})));
-        Mouvement mouvement = Mouvement.GAUCHE;
+        // State state = new State(new Grid[3][3], new ArrayList<>(Arrays.asList(new int[] {1, 1})));
+        // Mouvement mouvement = Mouvement.GAUCHE;
 
-        QTable qTableSend = new QTable();
-        QTable qTableReceived = new QTable();
+        // QTable qTableSend = new QTable();
+        // QTable qTableReceived = new QTable();
 
-        qTableSend.setQValue(state, mouvement, 102.0);
-        qTableSend.save(path, "fromage");
+        // qTableSend.setQValue(state, mouvement, 102.0);
+        // qTableSend.save(path, "fromage");
 
-        try {qTableReceived.get(path, "fromage");} catch(ClassNotFoundException | IOException e) {e.printStackTrace();}
-        System.out.println(qTableReceived.getQValue(state, mouvement));
+        // try {qTableReceived.get(path, "fromage");} catch(ClassNotFoundException | IOException e) {e.printStackTrace();}
+        // System.out.println(qTableReceived.getQValue(state, mouvement));
+
+        QTable.folderStorage = 1;
+
+        QTable qTable = new QTable();
+
+        for(int i = 0; i<10000; i++) {
+            qTable.setQValue(new State(new Grid[3][3], new ArrayList<>(Arrays.asList(new int[] {i, 1}))), Mouvement.BAS, i);
+        }
+
+        qTable.save("res/save/", "file");
+
+        QTable qTable2 = new QTable();
+
+        try {
+            qTable2.get("res/save/", "file");
+        } catch (ClassNotFoundException | IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        qTable2.printHashMap();
     }
 
     public static void main(String[] args) {
